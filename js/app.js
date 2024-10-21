@@ -254,14 +254,19 @@ const host = 'https://copub.onrender.com/';
                 menuContainer.appendChild(document.createElement('br'));
             }
         }
-        
             
         createObjectMenu(objects);
         
     // #endregion APP FUNCTIONS
 
     // #region POLYGON FUNCTIONS
-        // Draw control in Leaflet       
+        // Draw control in Leaflet
+
+        //remove clear all option from delete mode
+        L.EditToolbar.Delete.include({
+            removeAllLayers: false
+        });
+
         const drawnItems = new L.FeatureGroup().addTo(map);
 
         const drawControl = new L.Control.Draw({
@@ -535,63 +540,12 @@ const host = 'https://copub.onrender.com/';
                 });
             }
 
-            // Function to revert polygons to their original geometry
-            function revertPolygonsToOriginal() {
-                drawnItems.clearLayers();  // Clear current layers from the map
-                polygonsArray = [];
-
-                // Iterate over the original geometries stored before editing
-                originalGeometries.forEach(polygon => {
-                    drawPolygon(polygon.layer);
-                    const objs = polygon.objects;
-                    objs.forEach(obj => {
-                        updatePolygonData(obj, true, polygon.area, polygon.id, null);
-                    })
-                });
-
-                console.log("Polygons reverted to original geometry.");
-            }
-
-            // Function to re-enter the edit mode
-            function reEnterEditMode() {
-                // Re-enter the edit mode by enabling the editing tool again
-                const editControl = new L.EditToolbar.Edit(map, {
-                    featureGroup: drawnItems,
-                    selectedPathOptions: {
-                        maintainColor: true,
-                    }
-                });
-                
-                editControl.enable();
-                console.log("Re-entering edit mode.");
-            }
-
-            let originalGeometries = {};
-
-            // When editing starts, store the original geometries of the polygons
-            map.on('draw:editstart', function() {
-                originalGeometries = polygonsArray;
-                console.log('PolygonsArray:', polygonsArray);
-                console.log('OriginalGeometries: ', originalGeometries);
-            });
-
             // When editing is completed (and save is clicked)
-            map.on('draw:edited', function (event) {
-                // Update all game stats (budget, scores, etc.)
+            map.on(L.Draw.Event.EDITED, function (event) {
                 updateGameStats();
-
-                // If the current budget is below zero, alert the user
                 if (currentBudget < 0) {
-                    let userResponse = window.confirm("The budget is below zero. Do you want to keep editing?");
-                    
-                    if (!userResponse) {
-                        // User cancels the edit, revert all changes to original geometries
-                        revertPolygonsToOriginal();
-                    } else {
-                        // User wants to keep editing, re-enter the edit mode
-                        reEnterEditMode();
-                    }
-                }
+                    window.alert("ATTENTION: The budget is below zero!");
+                } 
             });
 
         // #endregion LEAFLET CONTROLS

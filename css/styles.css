@@ -266,15 +266,6 @@ canvas {
 
 /* OTHER */
 
-
-#delete-mode-btn.delete-enabled {
-    background-color: rgba(255, 0, 0, 0.5);
-}
-
-#polygon-mode-btn.polygon-enabled {
-    background-color: rgb(0, 128, 0, 0.5);
-}
-
 #suggestions {
     border: 1px solid #ccc;
     border-top: none;
@@ -338,58 +329,4 @@ canvas {
 .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
-}
-
-/* Style the slider container */
-.slider-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 90vh; /* Set the height to 80% of the viewport height */
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 20px;
-    text-align: center;
-    z-index: 1000;
-
-    /* Flexbox for vertical and horizontal centering */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Ensure the content (images) fits within the slider height */
-.slider-container img {
-    display: none;
-    max-width: 100%;
-    max-height: 85vh; /* Ensure images don't overflow the container */
-    height: auto; /* Maintain aspect ratio */
-}
-
-/* Show only the active image */
-.slider-container img.active {
-    display: block;
-}
-
-/* Buttons */
-.slider-button {
-    background-color: #fff;
-    color: #000;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    margin: 10px;
-}
-
-.close-slider {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
 }
