@@ -189,10 +189,10 @@ const host = 'https://copub.onrender.com/';
             'A06': { en: 'Telescope', el: 'Τηλεσκόπιο', category: 'A', cost: 13, economy: 1, city: 2, nature: 1, society: 3, icon: 'images/icons/A06-i.png', picture: 'images/gallery/A06.jpg'},
             'F01': { en: 'Eco-Furniture', el: 'Οικολογικά Έπιπλα', category: 'F', cost: 3, economy: 3, city: 4, nature: 4, society: 4, icon: 'images/icons/F01-i.png', picture: 'images/gallery/F01.jpg'},
             'F02': { en: 'Resting Places', el: 'Χώρος Ξεκούρασης', category: 'F', cost: 12, economy: 3, city: 4, nature: 4, society: 4, icon: 'images/icons/F02-i.png', picture: 'images/gallery/F02.jpg'},
-            'F03': { en: 'Kiosk', el: 'Κιόσκι', category: 'F', cost: 13, economy: 1, city: 3, nature: 1, society: 4, icon: 'images/icons/F03-i.png', picture: 'images/F03.jpg'},
+            'F03': { en: 'Kiosk', el: 'Κιόσκι', category: 'F', cost: 13, economy: 1, city: 3, nature: 1, society: 4, icon: 'images/icons/F03-i.png', picture: 'images/gallery/F03.jpg'},
             'W01': { en: 'Riparian Buffer', el: 'Παραποτάμια Ζώνη', category: 'W', cost: 5, economy: 2, city: 2, nature: 4, society: 3, icon: 'images/icons/W01-i.png', picture: 'images/gallery/W01.jpg'},
             'W02': { en: 'Permeable Surfaces', el: 'Διαπερατά Υλικά', category: 'W', cost: 2, economy: 1, city: 2, nature: 3, society: 2, icon: 'images/icons/W02-i.png', picture: 'images/gallery/W02.jpg'},
-            'W03': { en: 'Floodpark', el: 'Πάρκο Πλυμμήρας', category: 'W', cost: 40, economy: 4, city: 5, nature: 5, society: 2, icon: 'images/icons/W03-i.png', picture: 'images/gallery/03.jpg'}
+            'W03': { en: 'Floodpark', el: 'Πάρκο Πλυμμήρας', category: 'W', cost: 40, economy: 4, city: 5, nature: 5, society: 2, icon: 'images/icons/W03-i.png', picture: 'images/gallery/W03.jpg'}
         };
 
         //List of categories that are visible in the UI
