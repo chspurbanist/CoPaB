@@ -1649,11 +1649,64 @@ const host = 'https://copub.onrender.com/';
     
     // #region OPENCATALOGUE
 
-    function openCatalogue() {
-        const pdf = `${host}/images/catalogues/NBScards-${languageCode}.pdf`;
-        window.open(`js/flipbook-js/web/viewer.html?file=${pdf}`);
+    let pdfDoc = null,
+    currentPage = 1,
+    totalPages = 0,
+    pdfCanvas = document.getElementById('pdf-canvas'),
+    ctx = pdfCanvas.getContext('2d');
+
+    // Open and close modal
+    const openPdfViewerBtn = document.getElementById('open-pdf-viewer');
+    const closePdfViewerBtn = document.getElementById('close-pdf-viewer');
+    const pdfViewerModal = document.getElementById('pdf-viewer-modal');
+
+    openPdfViewerBtn.addEventListener('click', function() {
+        pdfViewerModal.style.display = 'flex';  // Show the modal
+        loadPDF(`images/catalogues/NBScards-${languageCode}.pdf`);   // Load the PDF
+    });
+
+    closePdfViewerBtn.addEventListener('click', function() {
+        pdfViewerModal.style.display = 'none';  // Hide the modal
+    });
+
+    // Load the PDF document
+    function loadPDF(pdfUrl) {
+        pdfjsLib.getDocument(pdfUrl).promise.then(function(pdfDoc_) {
+            pdfDoc = pdfDoc_;
+            totalPages = pdfDoc.numPages;
+            renderPage(currentPage);
+        });
     }
 
+    // Render a specific page of the PDF
+    function renderPage(pageNumber) {
+        pdfDoc.getPage(pageNumber).then(function(page) {
+            const viewport = page.getViewport({ scale: 1.5 });  // Adjust scale as needed
+            pdfCanvas.width = viewport.width;
+            pdfCanvas.height = viewport.height;
+
+            const renderContext = {
+                canvasContext: ctx,
+                viewport: viewport
+            };
+            page.render(renderContext);
+        });
+    }
+
+    // Next and Previous page buttons
+    document.getElementById('next-page').addEventListener('click', function() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderPage(currentPage);
+        }
+    });
+
+    document.getElementById('prev-page').addEventListener('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPage(currentPage);
+        }
+    });
     // #endregion OPENCATALOGUE
 
     // #region HOME BUTTON

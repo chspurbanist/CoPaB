@@ -72,7 +72,7 @@
         </select>
         <p></p>
         <!--Icon Buttons-->
-        <button id="catalogue-btn" class="icon-btn" onclick="openCatalogue()">
+        <button id="open-pdf-viewer" class="icon-btn">
             <img src="assets/menu-icons/NBScatalogue.png" height="30px" width="30px">
         </button>
         <button id="home-btn" class="icon-btn" onclick="homeBtn()">
@@ -128,6 +128,15 @@
         </form>
     </div>
 
+    <div class="pdf-viewer-modal" id="pdf-viewer-modal">
+        <div class="pdf-viewer">
+            <span class="close-btn" id="close-pdf-viewer">&times;</span>
+            <canvas id="pdf-canvas"></canvas>
+            <span class="arrow arrow-left" id="prev-page">&#9664;</span>
+            <span class="arrow arrow-right" id="next-page">&#9654;</span>
+        </div>
+    </div>
+
 
     <!-- Scripts Section -->
 
@@ -145,9 +154,9 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
 
     <!-- Add jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <!-- Add jsPDF font tools -->
