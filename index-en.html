@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="gr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serious GeoGame for Co-desing and Participatory Budgeting</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+
+    <!-- Pannellum -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="font/MyFont-normal.js"></script>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <!-- Div to hold the pannellum 360 viewer (hidden until activated) -->
+    <div id="panorama"></div>
+   
+    <div class="gallery" id="gallery">
+        <img src="assets/menu-icons/trl.png" style="border: none; width: 80px; display: block; margin: 0 auto; padding-top: 5px;"> 
+        <h3 class="gallery-title">CoPaB</h3>
+        <img src="assets/menu-icons/eu-funded.png" style="border: none; width: 70px; display: block; margin: 0 auto;"> 
+    </div>
+    
+    <div id="info">
+        <!-- Values -->
+        <h3>Budget: €<span id="budget">50000</span></h3>
+        <h4>Scores<span id="score"></span></h4>
+        <ul>
+            <li>Economy: <span id="economy">0</span></li>
+            <li>City: <span id="city">0</span></li>
+            <li>Nature: <span id="nature">0</span></li>
+            <li>Society: <span id="society">0</span></li>
+        </ul>
+        <!-- Buttons -->        
+        <label for="mapStyleSelector"><span id="locationSearch"></span></label>
+        <div></div>
+        <div id="search-container">
+            <label>Search Location</label>
+            <div></div>
+            <input type="text" id="location-search" oninput="searchLocation()" placeholder="Search">
+            <ul id="suggestions" style="list-style-type: none; padding: 0;"></ul>
+        </div>   
+        <div></div>
+        <button class="tooltip" id="save-location-btn" onclick="saveLocation()">Save Location
+        </button>
+        <select id="saved-locations" onchange="goToSavedLocation(this.value)">
+            <option value="" disabled selected >Locations</option>
+        </select>
+        <div></div>
+        <label for="mapStyleSelector">
+            <span id="mapstyle">Map Style: </span>
+        </label>
+
+        <select id="mapStyleSelector">
+            <option value="streets-v11">Streets</option>
+            <option value="outdoors-v11">Outdoors</option>
+            <option value="light-v10">Light</option>
+            <option value="dark-v10">Dark</option>
+            <option value="satellite-v9">Satellite</option>
+            <option value="satellite-streets-v11">Satellite Streets</option>
+            <option value="navigation-day-v1">Navigation Day</option>
+            <option value="navigation-night-v1">Navigation Night</option>
+        </select>
+        <p></p>
+        <!--Icon Buttons-->
+        <img src="assets/menu-icons/NBScatalogue.png" id="catalogue-btn" height="70px" onclick="openCatalogue()">
+        <!-- <img src="assets/menu-icons/polygon.png" id="polygon-mode-btn" height="70px" onclick="togglePolygonMode()"> -->
+        <p></p>
+        <img src="assets/menu-icons/home.png" alt="import-csv-icon" height="30px" onclick="homeBtn('index-en.html')">
+        <img src="assets/menu-icons/reset.png" id="reset-btn" height="30px" onclick="resetGame('index-en.html')">
+        <img src="assets/menu-icons/export-pdf.png" id="export-pdf-btn" height="30px" onclick="exportPDF()">
+        <img src="assets/menu-icons/import-csv.png" id="import-csv-btn" height="30px" onclick="importCSV()">
+        <img src="assets/menu-icons/export-csv.png" id="export-csv-btn" height="30px" onclick="exportToCSV()">
+
+        <!-- Info Button -->
+        <div class="info-btn">
+            <button id="openPopup"><b>INSTRUCTIONS</b></button>
+        </div>
+
+        <!-- Info text -->
+        <div class="overlay" id="overlay"></div>
+        <div class="info-popup" id="popup"> 
+            <p>You are a group of Strovolos Municipality residents and you are given <b>a budget of 50k euros</b> for the integration of Nature-Based Solutions along the linear park of Pedieos River.</p>
+            <p><b>Nature-Based Solutions</b> are interventions in urban environments that encourage natural processes, such as biodiversity enhancement, water management, and human-nature relations.</p>
+            <p>In your posession you have <b>an NBS catalogue</b> with multiple choices for interventions, as well as map points with <b>360° images</b>, in order to explore the area and identify suitable locations.</p>
+            <p>Your interventions should be located <b>only within the orange boundaries</b> where is our area of interest.</p>
+
+
+            <button class="tooltip" id="closePopup">CLOSE</button>
+        </div>
+
+    </div>
+
+    <div id="polygon-info">
+        <h3>Polygon ID <span id="polygonID">----</span></h3>
+        <form id="polygon-form">
+            <h4>Polygon Area: <span id="area">0</span> sq.m.</h4>
+            <h4>Area's Cost: €<span id="polygonCost">0</span></h4>
+
+            <label for="area-title">Area Title:</label>
+            <textarea id="area-title" name="area-title" required style="width: 250px; height: 20px;"></textarea><br><br>
+           
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required style="width: 250px; height: 100px;"></textarea><br><br>
+    
+            <label>NBS Selection:</label><br>
+            <!-- NBS Lists -->    
+            <div id="object-menu"></div>
+        </form>
+    </div>
+
+
+    <!-- Scripts Section -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.12.1/proj4.js" integrity="sha512-8cX2hkLcrgklvabUEGfanjHM+J9Aw1/WEt+649vdP8QcbmRLAnxT4YS2/plOSsQzv7PDBogUYxbMxB9LdBN1oA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wicket/1.3.8/wicket.min.js" integrity="sha512-aaiN+QIXD0N9Id865vSDEfttZJV9v8ZGh7jXMnYI2zbZhkSYOulS4IH0u4pC61/KXT20UedYzL5xi5siIg6mlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="js/marzipano/marzipano.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.Editable/1.2.0/Leaflet.Editable.min.js"></script>
+    <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
+        
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+
+    <!-- Add jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Add jsPDF font tools -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.plugin.standard_fonts_metrics.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.plugin.split_text_to_size.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.plugin.annotations.min.js"></script>
+    
+    <script src="js/app.js"></script>
+
+</body>
+</html>
