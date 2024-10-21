@@ -108,7 +108,6 @@ button {
 }
 
 /* GALLERY */
-
 .gallery {
     display: grid;
     overflow: scroll;
