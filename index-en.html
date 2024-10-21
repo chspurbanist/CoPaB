@@ -72,14 +72,24 @@
         </select>
         <p></p>
         <!--Icon Buttons-->
-        <img src="assets/menu-icons/NBScatalogue.png" id="catalogue-btn" height="70px" onclick="openCatalogue()">
-        <!-- <img src="assets/menu-icons/polygon.png" id="polygon-mode-btn" height="70px" onclick="togglePolygonMode()"> -->
-        <p></p>
-        <img src="assets/menu-icons/home.png" alt="import-csv-icon" height="30px" onclick="homeBtn('index-en.html')">
-        <img src="assets/menu-icons/reset.png" id="reset-btn" height="30px" onclick="resetGame('index-en.html')">
-        <img src="assets/menu-icons/export-pdf.png" id="export-pdf-btn" height="30px" onclick="exportPDF()">
-        <img src="assets/menu-icons/import-csv.png" id="import-csv-btn" height="30px" onclick="importCSV()">
-        <img src="assets/menu-icons/export-csv.png" id="export-csv-btn" height="30px" onclick="exportToCSV()">
+        <button id="catalogue-btn" class="icon-btn" onclick="openCatalogue()">
+            <img src="assets/menu-icons/NBScatalogue.png" height="30px" width="30px">
+        </button>
+        <button id="home-btn" class="icon-btn" onclick="homeBtn()">
+            <img src="assets/menu-icons/home.png" height="30px" width="30px">
+        </button>
+        <button id="reset-btn" class="icon-btn" onclick="resetGame()">
+            <img src="assets/menu-icons/reset.png" height="30px" width="30px">
+        </button>
+        <button id="import-csv-btn" class="icon-btn" onclick="importCSV()">
+            <img src="assets/menu-icons/import-csv.png"  height="30px" width="30px">
+        </button>
+        <button id="export-csv-btn" class="icon-btn" onclick="exportToCSV()">
+            <img src="assets/menu-icons/export-csv.png" height="30px" width="30px">
+        </button>
+        <button id="export-pdf-btn" class="icon-btn" onclick="exportPDF()">
+            <img src="assets/menu-icons/export-pdf.png" height="30px" width="30px">
+        </button>
 
         <!-- Info Button -->
         <div class="info-btn">

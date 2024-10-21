@@ -67,6 +67,12 @@ body, html {
     text-overflow: ellipsis;  
 }
 
+.icon-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 /* INSTRUCTIONS */
 
 .info-btn {
