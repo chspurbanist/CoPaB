@@ -1,9 +1,5 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiY3NwYW5vcyIsImEiOiJjbHgzMjBucjYwdjMxMm1zZDVvNjBqaGh2In0.ZYBMQvQHNg2pe34dtyPwEQ';
-<<<<<<< HEAD
-// const localHost = 'http://127.0.0.1:5501/';
-=======
->>>>>>> b6e77f1af7c67d2445ce5b6de641b462d787b3bd
-const localHost = 'https://copub.onrender.com/';
+const host = 'https://copub.onrender.com/';
 
 // #region START-UP FUNCTIONS
     const currentURL = window.location.pathname;
@@ -179,24 +175,24 @@ const localHost = 'https://copub.onrender.com/';
         // List of objects organized per category with their values and icons
 
         const objects = {
-            'B01': { en: 'Bird Nests', el: 'Φωλιές Πουλιών', category: 'B', cost: 1, economy: 1, city: 1, nature: 4, society: 2, icon: 'images/B01-i.png', picture: 'images/B01.jpg'},
-            'B02': { en: 'Tree Planting', el: 'Δεντροφύτευση', category: 'B', cost: 3, economy: 1, city: 5, nature: 5, society: 4, icon: 'images/B02-i.png', picture: 'images/B02.jpg'},
-            'B03': { en: 'Polinators Hotels', el: 'Ξενοδοχεία επικονιαστών', category: 'B', cost: 1, economy: 1, city: 1, nature: 4, society: 2, icon: 'images/B03-i.png', picture: 'images/B03.jpg'},
-            'B04': { en: 'Vegetable Gardens', el: 'Λαχανόκηπος', category: 'B', cost: 8, economy: 3, city: 1, nature: 3, society: 4, icon: 'images/B04-i.png', picture: 'images/B04.jpg'},
-            'B05': { en: 'Stone walls', el: 'Ξερολιθιές', category: 'B', cost: 1, economy: 1, city: 4, nature: 4, society: 2, icon: 'images/B05-i.png', picture: 'images/B05.jpg'},
-            'B06': { en: 'Arid Gardens', el: 'Ξεροί Κήποι', category: 'B', cost: 13, economy: 1, city: 4, nature: 4, society: 2, icon: 'images/B06-i.png', picture: 'images/B06.jpg'},
-            'A01': { en: 'Outdoor Gym', el: 'Υπαίθριο Γυμναστήριο', category: 'A', cost: 7, economy: 3, city: 5, nature: 3, society: 4, icon: 'images/A01-i.png', picture: 'images/A01.jpg'},
-            'A02': { en: 'Natural Playground', el: 'Φυσικοί Παιδότοποι', category: 'A', cost: 3, economy: 3, city: 5, nature: 3, society: 4, icon: 'images/A02-i.png', picture: 'images/A02.jpg'},
-            'A03': { en: 'Composting', el: 'Κομποστοποίηση', category: 'A', cost: 2, economy: 3, city: 1, nature: 3, society: 3, icon: 'images/A03-i.png', picture: 'images/A03.jpg'},
-            'A04': { en: 'Dog Park', el: 'Πάρκο Σκύλων', category: 'A', cost: 34, economy: 1, city: 2, nature: 1, society: 4, icon: 'images/A04-i.png', picture: 'images/A04.jpg'},
-            'A05': { en: 'Art', el: 'Τέχνη', category: 'A', cost: 23, economy: 1, city: 4, nature: 1, society: 3, icon: 'images/A05-i.png', picture: 'images/A05.jpg'},
-            'A06': { en: 'Telescope', el: 'Τηλεσκόπιο', category: 'A', cost: 13, economy: 1, city: 2, nature: 1, society: 3, icon: 'images/A06-i.png', picture: 'images/A06.jpg'},
-            'F01': { en: 'Eco-Furniture', el: 'Οικολογικά Έπιπλα', category: 'F', cost: 3, economy: 3, city: 4, nature: 4, society: 4, icon: 'images/F01-i.png', picture: 'images/F01.jpg'},
-            'F02': { en: 'Resting Places', el: 'Χώρος Ξεκούρασης', category: 'F', cost: 12, economy: 3, city: 4, nature: 4, society: 4, icon: 'images/F02-i.png', picture: 'images/F02.jpg'},
-            'F03': { en: 'Kiosk', el: 'Κιόσκι', category: 'F', cost: 13, economy: 1, city: 3, nature: 1, society: 4, icon: 'images/F03-i.png', picture: 'images/F03.jpg'},
-            'W01': { en: 'Riparian Buffer', el: 'Παραποτάμια Ζώνη', category: 'W', cost: 5, economy: 2, city: 2, nature: 4, society: 3, icon: 'images/W01-i.png', picture: 'images/W01.jpg'},
-            'W02': { en: 'Permeable Surfaces', el: 'Διαπερατά Υλικά', category: 'W', cost: 2, economy: 1, city: 2, nature: 3, society: 2, icon: 'images/W02-i.png', picture: 'images/W02.jpg'},
-            'W03': { en: 'Floodpark', el: 'Πάρκο Πλυμμήρας', category: 'W', cost: 40, economy: 4, city: 5, nature: 5, society: 2, icon: 'images/W03-i.png', picture: 'images/W03.jpg'}
+            'B01': { en: 'Bird Nests', el: 'Φωλιές Πουλιών', category: 'B', cost: 1, economy: 1, city: 1, nature: 4, society: 2, icon: 'images/icons/B01-i.png', picture: 'images/gallery/B01.jpg'},
+            'B02': { en: 'Tree Planting', el: 'Δεντροφύτευση', category: 'B', cost: 3, economy: 1, city: 5, nature: 5, society: 4, icon: 'images/icons/B02-i.png', picture: 'images/gallery/B02.jpg'},
+            'B03': { en: 'Polinators Hotels', el: 'Ξενοδοχεία επικονιαστών', category: 'B', cost: 1, economy: 1, city: 1, nature: 4, society: 2, icon: 'images/icons/B03-i.png', picture: 'images/gallery/B03.jpg'},
+            'B04': { en: 'Vegetable Gardens', el: 'Λαχανόκηπος', category: 'B', cost: 8, economy: 3, city: 1, nature: 3, society: 4, icon: 'images/icons/B04-i.png', picture: 'images/gallery/B04.jpg'},
+            'B05': { en: 'Stone walls', el: 'Ξερολιθιές', category: 'B', cost: 1, economy: 1, city: 4, nature: 4, society: 2, icon: 'images/icons/B05-i.png', picture: 'images/gallery/B05.jpg'},
+            'B06': { en: 'Arid Gardens', el: 'Ξεροί Κήποι', category: 'B', cost: 13, economy: 1, city: 4, nature: 4, society: 2, icon: 'images/icons/B06-i.png', picture: 'images/gallery/B06.jpg'},
+            'A01': { en: 'Outdoor Gym', el: 'Υπαίθριο Γυμναστήριο', category: 'A', cost: 7, economy: 3, city: 5, nature: 3, society: 4, icon: 'images/icons/A01-i.png', picture: 'images/gallery/A01.jpg'},
+            'A02': { en: 'Natural Playground', el: 'Φυσικοί Παιδότοποι', category: 'A', cost: 3, economy: 3, city: 5, nature: 3, society: 4, icon: 'images/icons/A02-i.png', picture: 'images/gallery/A02.jpg'},
+            'A03': { en: 'Composting', el: 'Κομποστοποίηση', category: 'A', cost: 2, economy: 3, city: 1, nature: 3, society: 3, icon: 'images/icons/A03-i.png', picture: 'images/gallery/A03.jpg'},
+            'A04': { en: 'Dog Park', el: 'Πάρκο Σκύλων', category: 'A', cost: 34, economy: 1, city: 2, nature: 1, society: 4, icon: 'images/icons/A04-i.png', picture: 'images/gallery/A04.jpg'},
+            'A05': { en: 'Art', el: 'Τέχνη', category: 'A', cost: 23, economy: 1, city: 4, nature: 1, society: 3, icon: 'images/icons/A05-i.png', picture: 'images/gallery/A05.jpg'},
+            'A06': { en: 'Telescope', el: 'Τηλεσκόπιο', category: 'A', cost: 13, economy: 1, city: 2, nature: 1, society: 3, icon: 'images/icons/A06-i.png', picture: 'images/gallery/A06.jpg'},
+            'F01': { en: 'Eco-Furniture', el: 'Οικολογικά Έπιπλα', category: 'F', cost: 3, economy: 3, city: 4, nature: 4, society: 4, icon: 'images/icons/F01-i.png', picture: 'images/gallery/F01.jpg'},
+            'F02': { en: 'Resting Places', el: 'Χώρος Ξεκούρασης', category: 'F', cost: 12, economy: 3, city: 4, nature: 4, society: 4, icon: 'images/icons/F02-i.png', picture: 'images/gallery/F02.jpg'},
+            'F03': { en: 'Kiosk', el: 'Κιόσκι', category: 'F', cost: 13, economy: 1, city: 3, nature: 1, society: 4, icon: 'images/icons/F03-i.png', picture: 'images/F03.jpg'},
+            'W01': { en: 'Riparian Buffer', el: 'Παραποτάμια Ζώνη', category: 'W', cost: 5, economy: 2, city: 2, nature: 4, society: 3, icon: 'images/icons/W01-i.png', picture: 'images/gallery/W01.jpg'},
+            'W02': { en: 'Permeable Surfaces', el: 'Διαπερατά Υλικά', category: 'W', cost: 2, economy: 1, city: 2, nature: 3, society: 2, icon: 'images/icons/W02-i.png', picture: 'images/gallery/W02.jpg'},
+            'W03': { en: 'Floodpark', el: 'Πάρκο Πλυμμήρας', category: 'W', cost: 40, economy: 4, city: 5, nature: 5, society: 2, icon: 'images/icons/W03-i.png', picture: 'images/gallery/03.jpg'}
         };
 
         //List of categories that are visible in the UI
@@ -218,7 +214,7 @@ const localHost = 'https://copub.onrender.com/';
                 categoryHeading.classList.add('category-heading');
         
                 const img = document.createElement('img');
-                img.setAttribute('src', `images/${category}.png`);
+                img.setAttribute('src', `images/categories/${category}.png`);
                 img.classList.add('category-icon');
 
                 // Append the icon and category text to the heading
@@ -243,7 +239,6 @@ const localHost = 'https://copub.onrender.com/';
                         checkbox.name = 'objects';
                         checkbox.value = objectKey;
                         checkbox.classList.add('object-checkbox');
-                        // checkbox.onchange = function() { selectObject(this.value, this.checked); };
                         
                         // Create the display text for the checkbox option
                         const displayText = `${objectKey}: ${objectName} (€${objects[objectKey].cost}k)`;
@@ -680,7 +675,7 @@ const localHost = 'https://copub.onrender.com/';
             });
 
             marker.on('popupopen', function () {       
-                const imageHurl = localHost + location.imageUrl;
+                const imageHurl = host + location.imageUrl;
 
                 setTimeout(function () {
                     const panoElement = document.getElementById('panorama');
@@ -698,7 +693,7 @@ const localHost = 'https://copub.onrender.com/';
             });
 
             marker.on('popupopen', function () {       
-                const imageHurl = localHost + location.imageUrl;
+                const imageHurl = host + location.imageUrl;
                 
                 setTimeout(function () {
                     const panoElement = document.getElementById('panorama');
@@ -1271,10 +1266,8 @@ const localHost = 'https://copub.onrender.com/';
             await ensureTilesLoaded(); // Ensure tiles are fully loaded
 
             await loadImages(mapElement);
-            // await loadImages(gridElement);
 
             const mapImg = await captureElement(mapElement);
-            // const gridImg = await captureGridContainer(gridElement);
 
             // Gather information for the info panel
             const info = {
@@ -1655,81 +1648,11 @@ const localHost = 'https://copub.onrender.com/';
     // #endregion IMPORT CSV
     
     // #region OPENCATALOGUE
-        let catalogueOpen = false;
 
-        async function openCatalogue() {
-            
-            // Create the slider container dynamically
-            const sliderContainer = document.createElement('div');
-            sliderContainer.classList.add('slider-container');
-
-            // Array of images 
-            const images = [];
-            for (const key in objects) {
-                if (objects.hasOwnProperty(key)) {
-                    const image = `images/${key}-c-${languageCode}.jpg`;
-                    images.push(image);
-                }     
-            }
-        
-            // Create image elements and append them to the slider container
-            images.forEach((src, index) => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.classList.add(index === 0 ? 'active' : 'inactive'); // Make the first image active
-                sliderContainer.appendChild(img);
-            });
-
-            // Create the left and right navigation buttons
-            const prevButton = document.createElement('button');
-            prevButton.innerText = 'Previous';
-            prevButton.classList.add('slider-button');
-            sliderContainer.appendChild(prevButton);
-
-            const nextButton = document.createElement('button');
-            nextButton.innerText = 'Next';
-            nextButton.classList.add('slider-button');
-            sliderContainer.appendChild(nextButton);
-
-            // Close button to close the slider
-            const closeButton = document.createElement('button');
-            closeButton.innerText = 'Close';
-            closeButton.classList.add('close-slider');
-            sliderContainer.appendChild(closeButton);
-
-            // Append the slider to the body
-            document.body.appendChild(sliderContainer);
-            sliderContainer.style.display = 'block'; // Show the slider
-
-            // Set up the slider functionality
-            let currentImageIndex = 0;
-            const imgElements = sliderContainer.querySelectorAll('img');
-
-            function showImage(index) {
-                imgElements.forEach((img, i) => {
-                    img.classList.remove('active');
-                    if (i === index) {
-                        img.classList.add('active');
-                    }
-                });
-            }
-
-            // Add event listeners for the buttons
-            prevButton.addEventListener('click', function() {
-                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-                showImage(currentImageIndex);
-            });
-
-            nextButton.addEventListener('click', function() {
-                currentImageIndex = (currentImageIndex + 1) % images.length;
-                showImage(currentImageIndex);
-            });
-
-            // Close button functionality
-            closeButton.addEventListener('click', function() {
-                document.body.removeChild(sliderContainer); // Remove the slider from the DOM
-            });
-        }
+    function openCatalogue() {
+        const pdf = `images/catalogues/NBScards-${languageCode}.pdf`;
+        window.open(`${host}js/flipbook-js/web/viewer.html?file=${pdf}`);
+    }
 
     // #endregion OPENCATALOGUE
 
