@@ -1711,11 +1711,11 @@ const host = 'https://copub.onrender.com/';
 
     // #region HOME BUTTON
 
-        function homeBtn(currentLanguage) {   
+        function homeBtn() {   
             var confirmMessage; 
-            if (currentLanguage === 'index-en.html') {
+            if (languageCode === 'en') {
                 confirmMessage = "Going to homepage will erase your scenario. Are you sure you want to proceed?";
-            } else if (currentLanguage === 'index-el.html') {
+            } else if (languageCode === 'el') {
                 confirmMessage = "Για να πάτε στη αρχική σελίδα το σενάριο σας θα διαγραφεί. Είστε σίγουροι ότι θέλετε να προχωρήσετε;";
             }
 
