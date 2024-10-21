@@ -582,7 +582,7 @@ const host = 'https://copub.onrender.com/';
 
                 // If the current budget is below zero, alert the user
                 if (currentBudget < 0) {
-                    let userResponse = confirm("The budget is below zero. Do you want to keep editing?");
+                    let userResponse = window.confirm("The budget is below zero. Do you want to keep editing?");
                     
                     if (!userResponse) {
                         // User cancels the edit, revert all changes to original geometries
@@ -906,16 +906,16 @@ const host = 'https://copub.onrender.com/';
     // #endregion INFO BUTTON
 
     // #region RESET BUTTON
-        function resetGame(currentLanguage) {
+        function resetGame() {
             
             var confirmMessage; 
-            if (currentLanguage === 'index-en.html') {
+            if (languageCode === 'en') {
                 confirmMessage = "Are you sure, you want to reset the game?";
-            } else if (currentLanguage === 'index-el.html') {
+            } else if (languageCode === 'el') {
                 confirmMessage = "Είστε σίγουροι ότι θέλετε να επανεκκινήσετε το παιχνίδι;";
             }
 
-            var confirmChange = confirm(confirmMessage);
+            var confirmChange = window.confirm(confirmMessage);
             
             if (confirmChange) {
             
