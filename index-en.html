@@ -11,12 +11,15 @@
     crossorigin=""/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
 
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+
     <!-- Pannellum -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 
     <link rel="stylesheet" href="css/styles.css">
-    <script src="font/MyFont-normal.js"></script>
 </head>
 <body>
 
@@ -73,14 +76,24 @@
         </select>
         <p></p>
         <!--Icon Buttons-->
-        <img src="assets/menu-icons/NBScatalogue.png" id="catalogue-btn" height="70px" onclick="openCatalogue()">
-        <!-- <img src="assets/menu-icons/polygon.png" id="polygon-mode-btn" height="70px" onclick="togglePolygonMode()"> -->
-        <p></p>
-        <img src="assets/menu-icons/home.png" alt="import-csv-icon" height="30px" onclick="homeBtn('index-en.html')">
-        <img src="assets/menu-icons/reset.png" id="reset-btn" height="30px" onclick="resetGame('index-en.html')">
-        <img src="assets/menu-icons/export-pdf.png" id="export-pdf-btn" height="30px" onclick="exportPDF()">
-        <img src="assets/menu-icons/import-csv.png" id="import-csv-btn" height="30px" onclick="importCSV()">
-        <img src="assets/menu-icons/export-csv.png" id="export-csv-btn" height="30px" onclick="exportToCSV()">
+        <button id="open-pdf-viewer" class="icon-btn">
+            <img src="assets/menu-icons/NBScatalogue.png" height="30px" width="30px">
+        </button>
+        <button id="home-btn" class="icon-btn" onclick="homeBtn()">
+            <img src="assets/menu-icons/home.png" height="30px" width="30px">
+        </button>
+        <button id="reset-btn" class="icon-btn" onclick="resetGame()">
+            <img src="assets/menu-icons/reset.png" height="30px" width="30px">
+        </button>
+        <button id="import-csv-btn" class="icon-btn" onclick="importCSV()">
+            <img src="assets/menu-icons/import-csv.png"  height="30px" width="30px">
+        </button>
+        <button id="export-csv-btn" class="icon-btn" onclick="exportToCSV()">
+            <img src="assets/menu-icons/export-csv.png" height="30px" width="30px">
+        </button>
+        <button id="export-pdf-btn" class="icon-btn" onclick="exportPDF()">
+            <img src="assets/menu-icons/export-pdf.png" height="30px" width="30px">
+        </button>
 
         <!-- Info Button -->
         <div class="info-btn">
@@ -119,13 +132,21 @@
         </form>
     </div>
 
+    <div class="pdf-viewer-modal" id="pdf-viewer-modal">
+        <div class="pdf-viewer">
+            <span class="close-btn" id="close-pdf-viewer">&times;</span>
+            <canvas id="pdf-canvas"></canvas>
+            <span class="arrow arrow-left" id="prev-page">&#9664;</span>
+            <span class="arrow arrow-right" id="next-page">&#9654;</span>
+        </div>
+    </div>
+
 
     <!-- Scripts Section -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.12.1/proj4.js" integrity="sha512-8cX2hkLcrgklvabUEGfanjHM+J9Aw1/WEt+649vdP8QcbmRLAnxT4YS2/plOSsQzv7PDBogUYxbMxB9LdBN1oA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wicket/1.3.8/wicket.min.js" integrity="sha512-aaiN+QIXD0N9Id865vSDEfttZJV9v8ZGh7jXMnYI2zbZhkSYOulS4IH0u4pC61/KXT20UedYzL5xi5siIg6mlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="js/marzipano/marzipano.js"></script>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
@@ -137,9 +158,9 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
 
     <!-- Add jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <!-- Add jsPDF font tools -->
