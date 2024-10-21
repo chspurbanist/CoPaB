@@ -1650,7 +1650,7 @@ const host = 'https://copub.onrender.com/';
     // #region OPENCATALOGUE
 
     function openCatalogue() {
-        const pdf = `../../images/catalogues/NBScards-${languageCode}.pdf`;
+        const pdf = `${host}/images/catalogues/NBScards-${languageCode}.pdf`;
         window.open(`js/flipbook-js/web/viewer.html?file=${pdf}`);
     }
 
