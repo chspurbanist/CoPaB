@@ -52,7 +52,7 @@ body, html {
     overflow: scroll;
     top: 10px;
     left: 10px;
-    width: 270px;
+    width: 19vw;
     height: 47vh;
     background: white;
     padding: 10px;
@@ -119,7 +119,8 @@ button {
 .gallery {
     display: grid;
     overflow: scroll;
-    grid-template-columns: repeat(3, 120px); 
+    width: 21vw;
+    grid-template-columns: repeat(3, 7vw); 
     gap: 10px; 
     position: absolute;
     top: 10px;
