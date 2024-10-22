@@ -492,8 +492,8 @@ const host = 'https://copub.onrender.com/';
             
             // Function to delete a polygon (called when deletion is confirmed)
             function deletePolygons(deletedPolygons, layer) {
-
-                deletedPolygons.forEach(polygonID => {
+                for (let i = 0; i < deletedPolygons.length; i++) {
+                    const polygonID = deletedPolygons[i][0];
                     const polygonData = polygonsArray.find(p => p.id === polygonID);
                     if (polygonData) {
                         // Remove the polygon data from polygonsArray
@@ -507,7 +507,7 @@ const host = 'https://copub.onrender.com/';
                         // Remove the layer (polygon) from the map
                         map.removeLayer(layer);
                     }
-                })
+                }
             }
 
             // EDIT POLYGON
@@ -1223,39 +1223,12 @@ const host = 'https://copub.onrender.com/';
     
         try {
             const csvRows = [];
-            const headers = ['Geometry', 'Latitude', 'Longitude', 'Category', 'Code', 'Element', 'Cost', 'Economy', 'City', 'Nature', 'Society', 'Icon', 'Picture'];
-            csvRows.push(headers.join(','));
-    
-            // Collect data from markers on the map
-            for (let hexId in hexagons) {
-                hexagons[hexId].forEach(marker => {
-                    const { lat, lng } = marker.getLatLng();
-                    const { type } = marker.data;
-                    const obj = objects[type];
-                    const row = [
-                        'Point',
-                        lat,
-                        lng,
-                        obj.category,
-                        type,
-                        obj.en,
-                        obj.cost,
-                        obj.economy,
-                        obj.city,
-                        obj.nature,
-                        obj.society,
-                        obj.icon,
-                        obj.picture
-                    ];
-                    csvRows.push(row.join(','));
-                });
-            }
-
+            
             // Collect data of polygons on the map
             polygonsArray.forEach(polygon => {
                 const polygonrow = [
                     'Polygon',
-                    polygon.points
+                    polygon
                 ];
                 csvRows.push(polygonrow.join(','));
             });
