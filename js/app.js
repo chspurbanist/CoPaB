@@ -1223,24 +1223,44 @@ const host = 'https://copub.onrender.com/';
     
         try {
             const csvRows = [];
+
+             // Define headers dynamically
+            const polygonHeaders = ['Type', 'ID', 'Title', 'Description', 'Coordinates', 'Area', 'Cost', 'Economy Impact', 'City Impact', 'Nature Impact', 'Society Impact'];
+            const locationHeaders = ['Type', 'Name', 'Latitude', 'Longitude', 'Zoom'];
+
+            // Add headers to CSV rows
+            csvRows.push(polygonHeaders.join(','));
             
             // Collect data of polygons on the map
             polygonsArray.forEach(polygon => {
-                const polygonrow = [
+                const coordinatesString = `"${JSON.stringify(polygon.coordinates)}"`;
+                const polygonRow = [
                     'Polygon',
-                    polygon
+                    polygon.id || '',
+                    polygon.title || '',
+                    polygon.description || '',
+                    coordinatesString || '',
+                    polygon.area || 0,
+                    polygon.cost || 0,
+                    polygon.economy || 0,
+                    polygon.city || 0,
+                    polygon.nature || 0,
+                    polygon.society || 0
                 ];
-                csvRows.push(polygonrow.join(','));
+                csvRows.push(polygonRow.join(','));
             });
+            
+            // Add saved location header and rows
+            csvRows.push(locationHeaders.join(','));
 
             // Import saved locations - names - positions on map
             savedLocations.forEach(location => {
                 const locationData = [
                     'Location',
-                    location.name,
-                    location.lat,
-                    location.lng,
-                    location.zoom
+                    location.name || '',
+                    location.lat || '',
+                    location.lng || '',
+                    location.zoom || ''
                 ];
                 csvRows.push(locationData.join(','));
             });
@@ -1253,7 +1273,7 @@ const host = 'https://copub.onrender.com/';
             // Check for File System Access API support
             if ('showSaveFilePicker' in window) {
                 const options = {
-                    suggestedName: 'map_data.csv',
+                    suggestedName: 'CoPaB-scenario.csv',
                     types: [
                         {
                             description: 'CSV Files',
@@ -1316,18 +1336,16 @@ const host = 'https://copub.onrender.com/';
     
             const file = await fileHandle.getFile();
             const reader = new FileReader();
-
-            resetGame();
     
             reader.onload = function(event) {
                 const csvContent = event.target.result;
-
     
                 Papa.parse(csvContent, {
                     header: true,
                     dynamicTyping: true,
                     complete: function(results) {
                         const data = results.data;
+                        console.log(data);
                         processCSVData(data);
                     }
                 });
@@ -1342,121 +1360,18 @@ const host = 'https://copub.onrender.com/';
     function processCSVData(data) {   
     
         data.forEach((row, rowIndex) => {
-            const geometry = row.Geometry;
+            const geometry = row.Type;
             
-            if (geometry == 'Point') {
-                const lat = parseFloat(row.Latitude);
-                const lng = parseFloat(row.Longitude);
-                const latlng = { lat, lng };
-                const category = row.Category;
-                const code = row.Code;
-                const element = row.Element;
-                const cost = parseFloat(row.Cost);
-                const economy = parseFloat(row.Economy);
-                const city = parseFloat(row.City);
-                const nature = parseFloat(row.Nature);
-                const society = parseFloat(row.Society);
-                const icon = row.Icon;
-                const picture = row.Picture;
-    
-                // Place a marker on the map
-                const marker = L.marker([lat, lng], {
-                    icon: L.icon({
-                        iconUrl: icon,
-                        iconSize: [32, 32],
-                    })
-                }).addTo(map).bindPopup(`${code}: ${element} <button onclick="removeMarker(${latlng.lat}, ${latlng.lng})">Διαγραφή</button>`);
-    
-                // Store marker data
-                marker.data = {
-                    type: code,
-                    latlng: latlng
-                };
-    
-                marker.on('click', function() {
-                    if (deleteModeEnabled) {
-                        removeMarker(lat, lng);
-                    }
-                });
-    
-                if (isKeyInArray(objectsList, code)) {
-                    const object = objectsList.find(item => item.key === code);
-                    object.quantity += 1;
-                } else {
-                    const amount = 1;
-                    addItem(element, category, amount);
-                }
-    
-                // Update hexagon (for demonstration purpose, using a random hexagon)
-                const hexId = 'some-hex-id'; // Replace with actual hexagon ID logic
-                if (!hexagons[hexId]) {
-                    hexagons[hexId] = [];
-                }
-                hexagons[hexId].push(marker);
-    
-                // Update budget and impacts
-                const obj = objects[marker.data.type];
-                budget -= obj.cost;
-                economyImpact += obj.economy;
-                cityImpact += obj.city;
-                natureImpact += obj.nature;
-                societyImpact += obj.society;
-    
-                document.getElementById('budget').innerText = budget;
-                document.getElementById('economy').innerText = economyImpact;
-                document.getElementById('city').innerText = cityImpact;
-                document.getElementById('nature').innerText = natureImpact;
-                document.getElementById('society').innerText = societyImpact;
-    
-                // Add the element's picture to the gallery
-                addToGallery(picture, element);
-    
-            } else if (geometry == 'Polygon') {
-                const points = [];
-                
-                // Get all values in the row regardless of the header names
-                const rowValues = Object.values(row);
-    
-                // Iterate through the row values in pairs (X, Y), assuming X (Longitude) is at odd index and Y (Latitude) at even index
-                for (let i = 1; i < rowValues.length;) {
-                    const lng = parseFloat(rowValues[i + 1]);     // X (Longitude)
-                    const lat = parseFloat(rowValues[i]); // Y (Latitude)
-    
-                    // Make sure both latitude and longitude are valid numbers
-                    if (!isNaN(lat) && !isNaN(lng)) {
-                        points.push([lat, lng]);  // Add point in [lat, lng] format
-                    }
-
-                    i += 2;
-                }
-    
-                if (points.length > 0) {
-                    // Create a Leaflet polygon using the points array
-                    const polygonID = generateUniqueID();         
-                    const leafletPolygon = L.polygon(points, {
-                        color: 'green',
-                        weight: 2,            // The stroke thickness
-                        fillOpacity: 0.2,     // Make the fill visible and transparent
-                        opacity: 1,           // Stroke opacity
-                    }).addTo(map);
-
-                    leafletPolygon.on('mouseover', function () {
-                        leafletPolygon.setStyle({ weight: 6 });  // Increase stroke width on hover
-                    });
-        
-                    leafletPolygon.on('mouseout', function () {
-                        leafletPolygon.setStyle({ weight: 2 });  // Reset stroke width when not hovered
-                    });
-        
-                    leafletPolygon.on('click', function() {
-                        if (deleteModeEnabled) {
-                            // map.on('click', removePolygon(polygonID));
-                        }
-                    });
-        
-                    leafletPolygons.push({ id: polygonID, polygon: leafletPolygon });
-                    polygonsArray.push({ id: polygonID, points: points });
-                }
+            if (geometry == 'Polygon') {
+                polygonData = data[rowIndex];
+                // polygonData = polygonData.slice(1);
+                console.log(typeof(polygonData));                    
+            } else if (geometry == 'Location') {
+                polygonData = data[rowIndex];
+                let firstKey = Objects.key(polygonData)[0];
+                delete polygonData[]
+                console.log(polygonData);
+            
             } else if (geometry == 'Location') {
                 const rowValues = Object.values(row);
                 savedLocations.push({
