@@ -294,48 +294,57 @@ const host = 'https://copub.onrender.com/';
         // SHOW POLYGON FORM
         function showFormForPolygon(polygonID, layer) {
             const formContainer = document.getElementById('polygon-info');
-            formContainer.style.display='block';
-
+            formContainer.style.display = 'block';
+        
             const polygonData = polygonsArray.find(p => p.id === polygonID);
-
+        
             if (polygonData) {
                 // Show form
                 document.getElementById('polygonID').innerText = polygonData.id;
                 document.getElementById('area').innerText = Math.round(polygonData.area);
-                document.getElementById('area-title').value = polygonData.title || '';
-                document.getElementById('description').value = polygonData.description || '';
-
-                // Clear existing event listeners by cloning the checkboxes
-                const objectMenu = document.getElementById('object-menu');
-                const clonedObjectMenu = objectMenu.cloneNode(true);  // Clone the menu to remove old listeners
-                objectMenu.parentNode.replaceChild(clonedObjectMenu, objectMenu);  // Replace the old menu with the cloned one
-
         
-                // Pre-check boxes based on previously selected objects, if any
+                // Clone the title field to remove old listeners
+                const titleField = document.getElementById('area-title');
+                const clonedTitleField = titleField.cloneNode(true);
+                titleField.parentNode.replaceChild(clonedTitleField, titleField);
+                clonedTitleField.value = polygonData.title || ''; // Set existing title or empty string
+        
+                // Clone the description field to remove old listeners
+                const descriptionField = document.getElementById('description');
+                const clonedDescriptionField = descriptionField.cloneNode(true);
+                descriptionField.parentNode.replaceChild(clonedDescriptionField, descriptionField);
+                clonedDescriptionField.value = polygonData.description || ''; // Set existing description or empty string
+        
+                // Clone the object menu to remove old listeners
+                const objectMenu = document.getElementById('object-menu');
+                const clonedObjectMenu = objectMenu.cloneNode(true);
+                objectMenu.parentNode.replaceChild(clonedObjectMenu, objectMenu);
+        
+                // Pre-check boxes based on previously selected objects
                 const checkboxes = clonedObjectMenu.querySelectorAll('input[name="objects"]');
-                
                 checkboxes.forEach(checkbox => {
-                    // Check or uncheck the checkbox based on polygonData.objects
                     checkbox.checked = polygonData.objects && polygonData.objects.includes(checkbox.value);
         
                     // Add a change event listener to update budget and score in real-time
-                    checkbox.addEventListener('change', function () {
-                        updatePolygonData(checkbox.value, checkbox.checked, polygonData.area, polygonData.id, checkbox)
+                    checkbox.addEventListener('change', function() {
+                        updatePolygonData(checkbox.value, checkbox.checked, polygonData.area, polygonData.id, checkbox);
                         updatePolygonPopup(layer, polygonID);
                     });
                 });
-
-                // Update title and description in real-time
-                document.getElementById('area-title').addEventListener('input', function () {
+        
+                // Add event listeners for title and description
+                clonedTitleField.addEventListener('input', function() {
                     polygonData.title = this.value;
                     updatePolygonPopup(layer, polygonID);
                 });
-
-                document.getElementById('description').addEventListener('input', function () {
+        
+                clonedDescriptionField.addEventListener('input', function() {
                     polygonData.description = this.value;
                     updatePolygonPopup(layer, polygonID);
                 });
-        }}
+            }
+        }
+        
 
         // POLYGON POPUP CONTENT
         function popupContent(polygonID) {
@@ -469,21 +478,7 @@ const host = 'https://copub.onrender.com/';
                     tempPolygonDelete(polygonID, false);
                 } else {
                     showFormForPolygon(polygonID, layer);
-                    const polygonData = polygonsArray.find(p => p.id === polygonID);
-                    const title = polygonData.title;
-                    const cost = polygonData.cost;
-                    const area = polygonData.area;
-                    const areaInSqKm = (area / 1e6).toFixed(2); // Convert from sq. meters to sq. kilometers for display
-                
-                    
-                    const updatedContent = `
-                        <strong>Polygon ID:</strong> ${polygonID} <br>
-                        <strong>Title:</strong> ${title} <br>
-                        <strong>Cost: €</strong> ${Math.round(cost)} <br>
-                        <strong>Area:</strong> ${area.toFixed(0)} m² (${areaInSqKm} km²) <br><br>
-                        ${popupContent(polygonID)}
-                    `;
-                    layer.setPopupContent(updatedContent).openPopup();
+                    updatePolygonPopup(layer, polygonID);
                 }
             }
 
@@ -864,75 +859,15 @@ const host = 'https://copub.onrender.com/';
             
             var confirmMessage; 
             if (languageCode === 'en') {
-                confirmMessage = "Are you sure, you want to reset the game?";
+                confirmMessage = "Are you sure, you want to reset the game? All changes will be discarded.";
             } else if (languageCode === 'el') {
-                confirmMessage = "Είστε σίγουροι ότι θέλετε να επανεκκινήσετε το παιχνίδι;";
+                confirmMessage = "Είστε σίγουροι ότι θέλετε να επανεκκινήσετε το παιχνίδι; Όλες οι αλλαγές σας θα διαγραφούν.";
             }
 
             var confirmChange = window.confirm(confirmMessage);
             
             if (confirmChange) {
-            
-                // Clear all markers from the map
-                for (let hexId in hexagons) {
-                    hexagons[hexId].forEach(marker => map.removeLayer(marker));
-                }
-
-                // Clear all polygons from the map
-                leafletPolygons.forEach(entry => {
-                    map.removeLayer(entry.polygon);  // Remove polygon from the map
-                });
-
-                
-                // Remove saved locations
-                savedLocations = [];
-
-                // Remove previous markers and poltgobs tracking
-                objectsList.length = 0;
-                polygonsArray.length = 0;
-                leafletPolygons.length = 0
-
-                // Clear the dropdown menu and reset it to the default option
-                const savedLocationsDropdown = document.getElementById('saved-locations');
-                savedLocationsDropdown.innerHTML = '<option value="" disabled selected>Τοποθεσίες</option>';
-
-                // Reset hexagons data structure
-                for (let hexId in hexagons) {
-                    hexagons[hexId] = [];
-                }
-
-                // Reset budget and scores
-                budget = initialBudget;
-                economyImpact = 0;
-                cityImpact = 0;
-                natureImpact = 0;
-                societyImpact = 0;
-
-                // Update the displayed budget and scores
-                document.getElementById('budget').innerText = budget;
-                document.getElementById('economy').innerText = economyImpact;
-                document.getElementById('city').innerText = cityImpact;
-                document.getElementById('nature').innerText = natureImpact;
-                document.getElementById('society').innerText = societyImpact;
-
-                // Reset the map view to the initial coordinates and zoom level
-                map.setView(initialLatLng, initialZoom);
-
-                // Clear all images from gallery
-                const gallery = document.querySelector('.gallery');
-                const images = gallery.querySelectorAll('img'); // Select only the images
-                const excludedImages = [
-                    'assets/menu-icons/eu-funded.png',
-                    'assets/menu-icons/trl.png' 
-                ];
-        
-                // Loop through each image
-                images.forEach(img => {
-                    // If the image's `src` is not in the `excludedImages` array, remove it
-                    if (!excludedImages.includes(img.getAttribute('src'))) {
-                        gallery.removeChild(img);
-                    }
-                });
+                location.reload();          
             }
     
         }

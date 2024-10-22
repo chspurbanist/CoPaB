@@ -91,7 +91,7 @@ button {
 }
 
 .info-popup {
-    display: none;
+    display: block;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -105,7 +105,7 @@ button {
 
 /* OVERLAY */
 .overlay {
-    display: none;
+    display: block;
     position: fixed;
     top: 0;
     left: 0;
@@ -120,11 +120,11 @@ button {
     display: grid;
     overflow: scroll;
     width: 21vw;
-    grid-template-columns: repeat(3, 7vw); 
+    grid-template-columns: repeat(3, 6vw); 
     gap: 10px; 
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 0.5vw;
+    right: 0.5vw;
     background: white;
     padding: 10px;
     border-radius: 5px;
