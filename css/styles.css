@@ -49,11 +49,10 @@ body, html {
 
 #info {
     position: fixed;
-    overflow: scroll;
     top: 10px;
     left: 10px;
     width: 15vw;
-    height: 47vh;
+    height: 50vh;
     background: white;
     padding: 10px;
     border-radius: 5px;
@@ -93,8 +92,11 @@ button {
 .info-popup {
     display: block;
     position: fixed;
+    overflow: scroll;
     left: 50%;
     top: 50%;
+    height: 80vh;
+    width: 45vw;
     transform: translate(-50%, -50%);
     background-color: white;
     border: 2px solid #333;
@@ -153,10 +155,10 @@ button {
     position: fixed;
     display: none;
     overflow: scroll;
-    top: 50vh;
+    top: 55vh;
     left: 10px;
     width: 15vw;
-    height: 50vh;
+    height: 41vh;
     background: white;
     padding: 10px;
     border-radius: 5px;

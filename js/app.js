@@ -10,11 +10,10 @@ const host = 'https://copub.onrender.com/';
     const initialLatLng = [35.143732, 33.343011]; 
     const initialZoom = 17; 
     let initialBudget = 0;
+    let budget = 0;
+    let currentBudget = 0;
 
     function setInitialBudget() {
-
-        let budget = 0;
-        let currentBudget = 0;
 
         const budgetInput = document.getElementById('initial-budget-input').value;
         const submitBtn = document.getElementById('submitBtn');

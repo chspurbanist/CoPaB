@@ -106,9 +106,9 @@
         <div class="overlay" id="overlay"></div>
         <div class="info-popup" id="popup">
             <div>
-                <h4>Set Initial Budget:</h4>
+                <h4>Set Initial Budget:
                 <input type="number" id="initial-budget-input" placeholder="Enter Budget">
-                <button class="tooltip" onclick="setInitialBudget()"><span id="submitBtn">Submit</span></button>
+                <button class="tooltip" onclick="setInitialBudget()"><span id="submitBtn">Submit</span></button></h4>
             </div>
 
             <div class="instruction-section">
@@ -123,10 +123,29 @@
                 as well as map points with <b>360° images</b>, in order to explore the area and identify suitable locations.
                 <p></p>
                 Your interventions should be located <b>only within the orange boundaries</b> where is our area of interest.
+                <h4 align="center">Game Tutorial</h4>
+
+                <div>
+                    <table border="0" cellspacing="5" cellpadding="5" align="center">
+                        <tr>
+                            <td><img src="assets/menu-icons/NBScatalogue.png" height="30px" width="30px"></td>                        </td>
+                            <td><h5>Preview NBS catalogue</h5></td>
+                            <td><img src="assets/menu-icons/home.png" height="30px" width="30px"></td>
+                            <td><h5>Return to Home Page <br>(scenario will be deleted)</h5></td>
+                            <td><img src="assets/menu-icons/reset.png" height="30px" width="30px"></td>
+                            <td><h5>Reset Game <br>(scenario will be deleted)</h5></td>
+                        </tr>
+                        <tr>
+                            <td><img src="assets/menu-icons/import.png"  height="30px" width="30px"></td>
+                            <td><h5>Import Scenario <br>(only original zip file exported)</h5></td>
+                            <td><img src="assets/menu-icons/save.png" height="30px" width="30px"></td>
+                            <td><h5>Export Scenario <br>(zip file)</h5></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
 
-            <div class="video-tutorial">
-                <h4>Game Tutorial</h4>
+            <div>
                 <video width="640" height="240" controls>
                     <source src="assets/tutorial.mp4" type="video/mp4">
                     Your browser does not support the video tag.
@@ -145,10 +164,10 @@
             <h4>Area's Cost: €<span id="polygonCost">0</span></h4>
 
             <label for="area-title">Area Title:</label>
-            <textarea id="area-title" name="area-title" required style="width: 250px; height: 20px;"></textarea><br><br>
+            <textarea id="area-title" name="area-title" required style="width: 200px; height: 20px;"></textarea><br><br>
            
             <label for="description">Description:</label>
-            <textarea id="description" name="description" required style="width: 250px; height: 100px;"></textarea><br><br>
+            <textarea id="description" name="description" required style="width: 200px; height: 100px;"></textarea><br><br>
     
             <label>NBS Selection:</label><br>
             <!-- NBS Lists -->    
