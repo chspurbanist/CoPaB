@@ -41,7 +41,7 @@
     
     <div id="info">
         <!-- Values -->
-        <h3>Budget: €<span id="budget">50000</span></h3>
+        <h3>Budget: €<span id="budget">0</span></h3>
         <h4>Scores<span id="score"></span></h4>
         <ul>
             <li>Economy: <span id="economy">0</span></li>
@@ -104,12 +104,34 @@
 
         <!-- Info text -->
         <div class="overlay" id="overlay"></div>
-        <div class="info-popup" id="popup"> 
-            <p>You are a group of Strovolos Municipality residents and you are given <b>a budget of 50k euros</b> for the integration of Nature-Based Solutions along the linear park of Pedieos River.</p>
-            <p><b>Nature-Based Solutions</b> are interventions in urban environments that encourage natural processes, such as biodiversity enhancement, water management, and human-nature relations.</p>
-            <p>In your posession you have <b>an NBS catalogue</b> with multiple choices for interventions, as well as map points with <b>360° images</b>, in order to explore the area and identify suitable locations.</p>
-            <p>Your interventions should be located <b>only within the orange boundaries</b> where is our area of interest.</p>
+        <div class="info-popup" id="popup">
+            <div>
+                <h4>Set Initial Budget:</h4>
+                <input type="number" id="initial-budget-input" placeholder="Enter Budget">
+                <button class="tooltip" onclick="setInitialBudget()"><span id="submitBtn">Submit</span></button>
+            </div>
 
+            <div class="instruction-section">
+                This digital serious geogame was designed under the European Horizon Project TRANS-lighthouses (grant agreement n.º 101084628)
+                The scope of the game is to <b>introduce co-design and participatory budgeting concepts</b> in the pilots' communities, 
+                and support the creations of scenarios for NBS implementation.
+                <p></p>
+                <b>Nature-Based Solutions</b> are interventions in urban environments that encourage natural processes, 
+                such as biodiversity enhancement, water management, and human-nature relations.
+                <p></p>
+                In your posession you have <b>an NBS catalogue</b> with multiple choices for interventions, 
+                as well as map points with <b>360° images</b>, in order to explore the area and identify suitable locations.
+                <p></p>
+                Your interventions should be located <b>only within the orange boundaries</b> where is our area of interest.
+            </div>
+
+            <div class="video-tutorial">
+                <h4>Game Tutorial</h4>
+                <video width="640" height="240" controls>
+                    <source src="assets/tutorial.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
 
             <button class="tooltip" id="closePopup">CLOSE</button>
         </div>

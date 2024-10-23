@@ -9,7 +9,37 @@ const host = 'https://copub.onrender.com/';
     // Map Constants
     const initialLatLng = [35.143732, 33.343011]; 
     const initialZoom = 17; 
-    const initialBudget = 50000;
+    let initialBudget = 0;
+
+    function setInitialBudget() {
+
+        let budget = 0;
+        let currentBudget = 0;
+
+        const budgetInput = document.getElementById('initial-budget-input').value;
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // Validate the budget input
+        if (isNaN(budgetInput) || budgetInput <= 0) {
+            alert("Please enter a valid budget!");
+        } else {
+            initialBudget = Number(budgetInput);
+            document.getElementById('budget').innerText = `${initialBudget}`;
+
+            document.getElementById('initial-budget-input').disabled = true;
+            submitBtn.disabled = true;
+            submitBtn.style.cursor = "not-allowed";
+            submitBtn.style.backgroundColor = "#ccc";
+            submitBtn.style.color = "#666";
+            submitBtn.innerText = 'Submitted';
+      
+            console.log('Initial Budget: ', typeof(initialBudget));
+        }
+
+        budget = initialBudget;
+        currentBudget = budget;
+    }
+
 
     const map = L.map('map', {
         editable: true,
@@ -28,10 +58,6 @@ const host = 'https://copub.onrender.com/';
     }
 
     // #region APP FUNCTIONS
-        // Initialization
-        let budget = initialBudget;
-        let currentBudget = budget;
-
         // Function to update pop-up in real-time
         function updatePolygonPopup(layer, polygonID) {
             const polygonData = polygonsArray.find(p => p.id === polygonID);
