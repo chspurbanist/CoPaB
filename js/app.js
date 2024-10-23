@@ -876,7 +876,6 @@ const host = 'https://copub.onrender.com/';
     // #region EXPORT CSV
 
         async function saveScenario() {
-            console
             const zip = new JSZip();
     
             // Save polygon data as JSON
@@ -897,58 +896,94 @@ const host = 'https://copub.onrender.com/';
     // #region IMPORT CSV
 
         // Function to handle the import process
-        function importScenario() {
-            const input = document.getElementById('file-input');
-            const file = input.files[0]; // Get the selected file
-
-            if (file) {
+        async function importScenario() {
+            try {
+                const [fileHandle] = await window.showOpenFilePicker({
+                    types: [{
+                        description: 'ZIP File',
+                        accept: { 'application/zip': ['.zip'] }
+                    }],
+                    multiple: false
+                });
+        
+                const file = await fileHandle.getFile();
+        
+                // Create a new instance of JSZip
+                const zip = new JSZip();
+        
+                // Read the zip file as ArrayBuffer
                 const reader = new FileReader();
-
-                // Use FileReader to read the file as ArrayBuffer
+                
                 reader.onload = async function(event) {
                     try {
-                        const arrayBuffer = event.target.result; // Get the ArrayBuffer
-
-                        // Initialize JSZip and load the ArrayBuffer
-                        const zip = await JSZip.loadAsync(arrayBuffer);
-
-                        // Now you can access the files within the zip
-                        zip.forEach(async (relativePath, file) => {
-                            const content = await file.async("string"); // Read the file content as a string
-                            console.log("File content of " + relativePath + ": " + content);
-
-                            // Process the CSV or JSON content to recreate the scenario
-                            if (relativePath.endsWith('.csv')) {
-                                processCSVData(content);  // Process the CSV data
-                            } else if (relativePath.endsWith('.json')) {
-                                processJSONData(JSON.parse(content));  // Process the JSON data
+                        const arrayBuffer = event.target.result;  // Get the ArrayBuffer of the ZIP file
+        
+                        // Load the zip file into JSZip
+                        const zipContent = await zip.loadAsync(arrayBuffer);
+        
+                        // Process each file within the zip
+                        zipContent.forEach(async (relativePath, file) => {
+                            const fileData = await file.async("string"); // Read the file as a string        
+                            if (relativePath === 'polygons.json') {
+                                processPolygonData(JSON.parse(fileData)); 
+                            } else if (relativePath === 'locations.json') {
+                                processLocationData(JSON.parse(fileData));
                             }
                         });
                     } catch (error) {
-                        console.error("Error reading zip file:", error);
+                        console.error("Error processing zip file:", error);
                     }
                 };
-
+        
+                // Read the file as ArrayBuffer to be used by JSZip
                 reader.onerror = function(event) {
                     console.error("File could not be read! Error:", event.target.error);
                 };
-
-                reader.readAsArrayBuffer(file); // Read the file as ArrayBuffer
-            } else {
-                alert("Please select a file to import.");
+                
+                reader.readAsArrayBuffer(file); // Read as ArrayBuffer
+        
+            } catch (error) {
+                console.error("Error reading ZIP file:", error);
             }
         }
+              
+        function processPolygonData(polygons) {
+            console.log("Processing polygon data:", polygons);
+            polygons.forEach(polygon => {
 
-        // Example function to process the CSV data
-        function processCSVData(content) {
-            // CSV processing logic here
-            console.log("Processing CSV data:", content);
+                const polCoords = polygon.coordinates[0];
+
+                console.log('PolCoords: ', polCoords);
+                const NewPolCoords = polCoords.map(coord => [coord[1], coord[0]]);
+                const layer = L.polygon(NewPolCoords);
+
+                console.log('Layer: ', layer);
+                drawnItems.addLayer(layer);
+
+                layer.polygonID = polygon.id;
+                drawPolygon(layer);
+
+                const polygonData = polygonsArray.find(p => p.id === polygon.id)
+                polygonData.title = polygon.title;
+                polygonData.description = polygon.description;
+
+                const objs = polygon.objects;
+                objs.forEach(obj => {
+                    updatePolygonData(obj, true, polygon.area, polygon.id, null);
+                })
+            })
         }
 
-        // Example function to process the JSON data
-        function processJSONData(data) {
-            // JSON processing logic here
-            console.log("Processing JSON data:", data);
+        function processLocationData(locations) {
+            locations.forEach(location => {
+                savedLocations.push({
+                    name: location.name,
+                    lat: location.lat,
+                    lng: location.lng,
+                    zoom: location.zoom,
+                });     
+            })
+            updateSavedLocationsDropdown();
         }
 
     
