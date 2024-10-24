@@ -599,41 +599,41 @@ const host = 'https://copub.onrender.com/';
 
         // 360 image data with coordinates and image URLs
         const imageLocations = [
-            { coordinates: [35.141958, 33.337419], imageUrl: '360photos/Pedieos-1.png'},
+            { coordinates: [35.141958, 33.337419], imageUrl: 'Pedieos-1.png'},
 
-            { coordinates: [35.142603, 33.338808], imageUrl: '360photos/Pedieos-2.png'},  //strovolos park (path)
-            { coordinates: [35.142894, 33.339485], imageUrl: '360photos/Pedieos-2a.png'}, //strovolos park (path)
-            { coordinates: [35.142865, 33.338722], imageUrl: '360photos/Pedieos-2b.png'}, //strovolos park (street)
-            { coordinates: [35.143153, 33.339364], imageUrl: '360photos/Pedieos-2c.png'}, //strovolos park (street)
-            { coordinates: [35.142904, 33.339095], imageUrl: '360photos/Pedieos-2d.png'}, //strovolos park (middle)
+            { coordinates: [35.142603, 33.338808], imageUrl: 'Pedieos-2.png'},  //strovolos park (path)
+            { coordinates: [35.142894, 33.339485], imageUrl: 'Pedieos-2a.png'}, //strovolos park (path)
+            { coordinates: [35.142865, 33.338722], imageUrl: 'Pedieos-2b.png'}, //strovolos park (street)
+            { coordinates: [35.143153, 33.339364], imageUrl: 'Pedieos-2c.png'}, //strovolos park (street)
+            { coordinates: [35.142904, 33.339095], imageUrl: 'Pedieos-2d.png'}, //strovolos park (middle)
         
-            { coordinates: [35.143217, 33.340265], imageUrl: '360photos/Pedieos-3.png'}, //alexandroupoleos left path
-            { coordinates: [35.143313, 33.339984], imageUrl: '360photos/Pedieos-3a.png'}, //alexandroupoleos left street
-            { coordinates: [35.143454, 33.340344], imageUrl: '360photos/Pedieos-3b.png'}, //alexandroupoleos left park
-            { coordinates: [35.143415, 33.339660], imageUrl: '360photos/Pedieos-3c.png'}, //alexandroupoleos left top street
+            { coordinates: [35.143217, 33.340265], imageUrl: 'Pedieos-3.png'}, //alexandroupoleos left path
+            { coordinates: [35.143313, 33.339984], imageUrl: 'Pedieos-3a.png'}, //alexandroupoleos left street
+            { coordinates: [35.143454, 33.340344], imageUrl: 'Pedieos-3b.png'}, //alexandroupoleos left park
+            { coordinates: [35.143415, 33.339660], imageUrl: 'Pedieos-3c.png'}, //alexandroupoleos left top street
 
-            { coordinates: [35.143607, 33.341372], imageUrl: '360photos/Pedieos-4.png'},
-            { coordinates: [35.143715, 33.340680], imageUrl: '360photos/Pedieos-4a.png'}, //alexandroupoleos right street
+            { coordinates: [35.143607, 33.341372], imageUrl: 'Pedieos-4.png'},
+            { coordinates: [35.143715, 33.340680], imageUrl: 'Pedieos-4a.png'}, //alexandroupoleos right street
 
-            { coordinates: [35.144195, 33.342549], imageUrl: '360photos/Pedieos-5.png'}, //passage
-            { coordinates: [35.144121, 33.341306], imageUrl: '360photos/Pedieos-5a.png'}, //passage left
-            { coordinates: [35.144360, 33.341847], imageUrl: '360photos/Pedieos-5b.png'}, //passage middle
-            { coordinates: [35.144540, 33.342242], imageUrl: '360photos/Pedieos-5c.png'}, //passage right
+            { coordinates: [35.144195, 33.342549], imageUrl: 'Pedieos-5.png'}, //passage
+            { coordinates: [35.144121, 33.341306], imageUrl: 'Pedieos-5a.png'}, //passage left
+            { coordinates: [35.144360, 33.341847], imageUrl: 'Pedieos-5b.png'}, //passage middle
+            { coordinates: [35.144540, 33.342242], imageUrl: 'Pedieos-5c.png'}, //passage right
             
-            { coordinates: [35.144601, 33.343712], imageUrl: '360photos/Pedieos-6.png'}, // bridge left
-            { coordinates: [35.144444, 33.343154], imageUrl: '360photos/Pedieos-6a.png'}, // bridge left +
-            { coordinates: [35.144651, 33.343376], imageUrl: '360photos/Pedieos-6b.png'}, // bridge left middle
-            { coordinates: [35.144804, 33.343647], imageUrl: '360photos/Pedieos-6c.png'}, // bridge left under
+            { coordinates: [35.144601, 33.343712], imageUrl: 'Pedieos-6.png'}, // bridge left
+            { coordinates: [35.144444, 33.343154], imageUrl: 'Pedieos-6a.png'}, // bridge left +
+            { coordinates: [35.144651, 33.343376], imageUrl: 'Pedieos-6b.png'}, // bridge left middle
+            { coordinates: [35.144804, 33.343647], imageUrl: 'Pedieos-6c.png'}, // bridge left under
 
-            { coordinates: [35.144848, 33.344086], imageUrl: '360photos/Pedieos-7.png'}, // bridge right
-            { coordinates: [35.144926, 33.343931], imageUrl: '360photos/Pedieos-7a.png'}, // bridge right middle
-            { coordinates: [35.145189, 33.344120], imageUrl: '360photos/Pedieos-7b.png'}, // bridge right middle    
+            { coordinates: [35.144848, 33.344086], imageUrl: 'Pedieos-7.png'}, // bridge right
+            { coordinates: [35.144926, 33.343931], imageUrl: 'Pedieos-7a.png'}, // bridge right middle
+            { coordinates: [35.145189, 33.344120], imageUrl: 'Pedieos-7b.png'}, // bridge right middle    
 
-            { coordinates: [35.145247, 33.344387], imageUrl: '360photos/Pedieos-8.png'},
-            { coordinates: [35.146067, 33.344751], imageUrl: '360photos/Pedieos-9.png'},
-            { coordinates: [35.147247, 33.344928], imageUrl: '360photos/Pedieos-10.png'},
-            { coordinates: [35.148347, 33.345354], imageUrl: '360photos/Pedieos-11.png'},
-            { coordinates: [35.148854, 33.345584], imageUrl: '360photos/Pedieos-12.png'},
+            { coordinates: [35.145247, 33.344387], imageUrl: 'Pedieos-8.png'},
+            { coordinates: [35.146067, 33.344751], imageUrl: 'Pedieos-9.png'},
+            { coordinates: [35.147247, 33.344928], imageUrl: 'Pedieos-10.png'},
+            { coordinates: [35.148347, 33.345354], imageUrl: 'Pedieos-11.png'},
+            { coordinates: [35.148854, 33.345584], imageUrl: 'Pedieos-12.png'},
         ];
 
         // Function to add circle markers for 360 images
@@ -660,7 +660,7 @@ const host = 'https://copub.onrender.com/';
             });
 
             marker.on('popupopen', function () {       
-                const imageHurl = host + location.imageUrl;
+                const imageHurl = host + 'assets/360photos/Strovolos/' + location.imageUrl;
 
                 setTimeout(function () {
                     const panoElement = document.getElementById('panorama');
