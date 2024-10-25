@@ -79,8 +79,9 @@ const host = 'https://copab.onrender.com/';
         // Function to update polygon's data
         function updatePolygonData(objectID, isChecked, area, polygonID, checkboxElement = null) {
             const polygonData = polygonsArray.find(p => p.id === polygonID);
+            let areaTemp = area;
             if (!objects[objectID].surface){
-                area = 1;
+                areaTemp = 1;
             }
 
             if (!polygonData.objects) {
@@ -90,7 +91,7 @@ const host = 'https://copab.onrender.com/';
             if (isChecked) {
                 if (!polygonData.objects.includes(objectID)) {
 
-                    const cost = (objects[objectID].cost*area);
+                    const cost = (objects[objectID].cost*areaTemp);
 
                     if (cost < currentBudget) {
                         polygonData.objects.push(objectID);
@@ -109,9 +110,16 @@ const host = 'https://copab.onrender.com/';
 
         
             polygonData.objects.forEach(objID => {
-                const objData = objects[objID];  
+                const objData = objects[objID];
+
+                if (objData.surface) {
+                    areaTemp = area;
+                } else { 
+                    areaTemp=1; 
+                }
+                  
                 if (objData) {
-                    polyCost += objData.cost * area;
+                    polyCost += objData.cost * areaTemp;
                     polyEco += objData.economy;
                     polyCity += objData.city;
                     polyNat += objData.nature;
@@ -660,7 +668,7 @@ const host = 'https://copab.onrender.com/';
             });
 
             marker.on('popupopen', function () {       
-                const imageHurl = `${host}assets/360photos/${location.imageUrl}`;   
+                const imageHurl = `${host}assets/360photos/${locations.imageUrl}`;   
 
                 setTimeout(function () {
                     const panoElement = document.getElementById('panorama');
