@@ -1,5 +1,5 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiY3NwYW5vcyIsImEiOiJjbHgzMjBucjYwdjMxMm1zZDVvNjBqaGh2In0.ZYBMQvQHNg2pe34dtyPwEQ';
-const host = 'https://copub.onrender.com/';
+const host = 'https://copab.onrender.com/';
 
 // #region START-UP FUNCTIONS
     const currentURL = window.location.pathname;
