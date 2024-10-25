@@ -668,7 +668,7 @@ const host = 'https://copab.onrender.com/';
             });
 
             marker.on('popupopen', function () {       
-                const imageHurl = `${host}assets/360photos/${locations.imageUrl}`;   
+                const imageHurl = `${host}assets/360photos/${location.imageUrl}`;   
 
                 setTimeout(function () {
                     const panoElement = document.getElementById('panorama');
