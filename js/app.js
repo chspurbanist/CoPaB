@@ -19,7 +19,7 @@ const host = 'https://copab.onrender.com/';
         const submitBtn = document.getElementById('submitBtn');
         
         // Validate the budget input
-        if (isNaN(budgetInput) || budgetInput <= 0) {
+        if (isNaN(budgetInput) || budgetInput < 20000 || budgetInput > 100000) {
             alert("Please enter a valid budget!");
         } else {
             initialBudget = Number(budgetInput);
@@ -30,9 +30,7 @@ const host = 'https://copab.onrender.com/';
             submitBtn.style.cursor = "not-allowed";
             submitBtn.style.backgroundColor = "#ccc";
             submitBtn.style.color = "#666";
-            submitBtn.innerText = 'Submitted';
-      
-            console.log('Initial Budget: ', typeof(initialBudget));
+            submitBtn.innerText = 'Submitted';      
         }
 
         budget = initialBudget;
@@ -78,6 +76,7 @@ const host = 'https://copab.onrender.com/';
 
         // Function to update polygon's data
         function updatePolygonData(objectID, isChecked, area, polygonID, checkboxElement = null) {
+            console.log('b: ', budget, 'cb: ', currentBudget);
             const polygonData = polygonsArray.find(p => p.id === polygonID);
             let areaTemp = area;
             if (!objects[objectID].surface){
@@ -905,16 +904,19 @@ const host = 'https://copab.onrender.com/';
             const zip = new JSZip();
     
             // Save polygon data as JSON
-            const polygonsData = JSON.stringify(polygonsArray); // Array that holds your polygons
+            const polygonsData = JSON.stringify(polygonsArray); 
             zip.file('polygons.json', polygonsData);
             
             // Save locations data if any
-            const locationsData = JSON.stringify(savedLocations); // Array for saved locations
+            const locationsData = JSON.stringify(savedLocations); 
             zip.file('locations.json', locationsData);
+
+            const initialBudgetData = JSON.stringify({ initialBudget }); 
+            zip.file('initialBudget.json', initialBudgetData);
           
             // Generate the zip file and download it
             const content = await zip.generateAsync({ type: 'blob' });
-            saveAs(content, 'CoPaB-scenario.zip'); // Requires FileSaver.js or equivalent to save zip
+            saveAs(content, 'CoPaB-scenario.zip');
         }
 
     // #endregion EXPORT CSV
@@ -933,45 +935,53 @@ const host = 'https://copab.onrender.com/';
                 });
         
                 const file = await fileHandle.getFile();
-        
-                // Create a new instance of JSZip
                 const zip = new JSZip();
-        
-                // Read the zip file as ArrayBuffer
                 const reader = new FileReader();
-                
+        
                 reader.onload = async function(event) {
                     try {
-                        const arrayBuffer = event.target.result;  // Get the ArrayBuffer of the ZIP file
-        
-                        // Load the zip file into JSZip
+                        const arrayBuffer = event.target.result;
                         const zipContent = await zip.loadAsync(arrayBuffer);
         
-                        // Process each file within the zip
-                        zipContent.forEach(async (relativePath, file) => {
-                            const fileData = await file.async("string"); // Read the file as a string        
-                            if (relativePath === 'polygons.json') {
-                                processPolygonData(JSON.parse(fileData)); 
-                            } else if (relativePath === 'locations.json') {
-                                processLocationData(JSON.parse(fileData));
-                            }
-                        });
+                        if (zipContent.files['initialBudget.json']) {
+                            const initialBudgetFile = zipContent.files['initialBudget.json'];
+                            const initialBudgetData = await initialBudgetFile.async("string");
+                            const importedBudget = JSON.parse(initialBudgetData);
+                            initialBudget = Number(importedBudget.initialBudget);
+                            const budgetInputElement = document.getElementById('initial-budget-input');
+                            budgetInputElement.value = initialBudget;
+                            setInitialBudget();
+                        }
+        
+                        if (zipContent.files['polygons.json']) {
+                            const polygonsFile = zipContent.files['polygons.json'];
+                            const polygonsData = await polygonsFile.async("string");
+                            processPolygonData(JSON.parse(polygonsData));
+                        }
+        
+                        if (zipContent.files['locations.json']) {
+                            const locationsFile = zipContent.files['locations.json'];
+                            const locationsData = await locationsFile.async("string");
+                            processLocationData(JSON.parse(locationsData));
+                        }
+        
                     } catch (error) {
                         console.error("Error processing zip file:", error);
                     }
                 };
         
-                // Read the file as ArrayBuffer to be used by JSZip
+                // Error handling for reading the file as ArrayBuffer
                 reader.onerror = function(event) {
                     console.error("File could not be read! Error:", event.target.error);
                 };
-                
+        
                 reader.readAsArrayBuffer(file); // Read as ArrayBuffer
         
             } catch (error) {
                 console.error("Error reading ZIP file:", error);
             }
         }
+        
               
         function processPolygonData(polygons) {
             console.log("Processing polygon data:", polygons);
