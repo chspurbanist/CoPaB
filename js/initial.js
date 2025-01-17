@@ -85,7 +85,7 @@ const languageCode = currentLanguage.match(/-(\w{2})\./)[1];
         // Get elements
         const openInfoPopup = document.getElementById('openPopup');
         const closeInfoPopup = document.getElementById('closePopup');
-        const infoPopup = document.getElementById('popup');
+        const infoPopup = document.getElementById('info-popup');
         const overlay = document.getElementById('overlay');
 
         // Open popup event
