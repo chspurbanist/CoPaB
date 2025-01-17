@@ -1,6 +1,6 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiY3NwYW5vcyIsImEiOiJjbHgzMjBucjYwdjMxMm1zZDVvNjBqaGh2In0.ZYBMQvQHNg2pe34dtyPwEQ';
-const host = 'https://copab.onrender.com/';
-// const host = 'http://localhost:5501/';
+// const host = 'https://copab.onrender.com/';
+const host = 'http://localhost:5501/';
 
 const currentURL = window.location.pathname;
 const currentLanguage = currentURL.split("/").pop();
@@ -331,36 +331,37 @@ const languageCode = currentLanguage.match(/-(\w{2})\./)[1];
 
 // #region INITIALIZE NBS DATA
 
-    // Function to read an Excel file and create an array of objects
-    function createArrayFromExcel(filePath) {
-        // Read the Excel file
-        const workbook = XLSX.readFile(filePath);
+    // Function to fetch and process the Excel file
+    function fetchAndProcessExcel() {
+        const filePath = 'assets/NBS-files/NBSList-en.xlsx'; // Path to your Excel file
 
-        // Get the first sheet name
-        const sheetName = workbook.SheetNames[0];
+        fetch(filePath)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.arrayBuffer(); // Read file as ArrayBuffer
+            })
+            .then((data) => {
+                // Parse the Excel data
+                const workbook = XLSX.read(data, { type: 'array' });
 
-        // Get the data from the sheet as JSON
-        const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+                // Get the first sheet's name and data
+                const sheetName = workbook.SheetNames[0];
+                const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-        // If the file is empty or has no data, return an empty array
-        if (!sheetData || sheetData.length === 0) {
-            console.log('The Excel file is empty or invalid.');
-            return [];
-        }
+                // Log the array for debugging
+                console.log('Parsed Excel Data:', sheetData);
 
-        // Display the data for debugging (optional)
-        console.log('Extracted Data:', sheetData);
-
-        return sheetData; // Returns an array of objects
+                // Return the data array for further use
+                return sheetData;
+            })
+            .catch((error) => {
+                console.error('Error fetching or processing Excel file:', error);
+            });
     }
 
-    // Example Usage
-    const filePath = `assets/NBS-files/NBSList-${languageCode}.xlsx`; 
-    const resultArray = createArrayFromExcel(filePath);
-
-    // Log the resulting array
-    console.log('Generated Array:', resultArray);
-
-
+    // Automatically fetch and process the file on page load
+    document.addEventListener('DOMContentLoaded', fetchAndProcessExcel);
 
 // #endregion INITIALIZE NBS DATA
