@@ -1,5 +1,6 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiY3NwYW5vcyIsImEiOiJjbHgzMjBucjYwdjMxMm1zZDVvNjBqaGh2In0.ZYBMQvQHNg2pe34dtyPwEQ';
 const host = 'https://copab.onrender.com/';
+// const host = 'http://localhost:5501/';
 
 const currentURL = window.location.pathname;
 const currentLanguage = currentURL.split("/").pop();
@@ -42,41 +43,6 @@ const languageCode = currentLanguage.match(/-(\w{2})\./)[1];
     });
 
 // #endregion INITIALIZE MAP
-
-// #region INITIALIZE NBS DATA
-
-    // // Read NBS excel file
-    // const XLSX = require('xlsx');
-
-    // // Load the Excel file
-    // function loadExcelToDataFrame(filePath) {
-    //     // Read the Excel file
-    //     const workbook = XLSX.readFile(filePath);
-
-    //     // Get the first sheet's name
-    //     const sheetName = workbook.SheetNames[0];
-
-    //     // Parse the data from the first sheet
-    //     const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-
-    //     // Option 1: Plain JavaScript Array (JSON)
-    //     console.log("Plain Array Data:", sheetData);
-
-    //     // Option 2: Convert to DataFrame (using danfojs-node)
-    //     const df = new dfd.DataFrame(sheetData);
-    //     console.log("DataFrame:", df);
-
-    //     // Return the plain array or DataFrame
-    //     return df; // or return sheetData if not using danfojs-node
-    // }
-
-    // // Call the function with your Excel file
-    // const filePath = `assets/MBS-files/NBS List-${languageCode}.xlsx`; // Update this path
-    // const dataFrame = loadExcelToDataFrame(filePath);
-    // console.log(dataFrame);
-
-
-// #endregion INITIALIZE NBS DATA
 
 // #region BUTTONS
 
@@ -362,3 +328,39 @@ const languageCode = currentLanguage.match(/-(\w{2})\./)[1];
     // #endregion EXPORT CSV
 
 // #endregion BUTTONS
+
+// #region INITIALIZE NBS DATA
+
+    // Function to read an Excel file and create an array of objects
+    function createArrayFromExcel(filePath) {
+        // Read the Excel file
+        const workbook = XLSX.readFile(filePath);
+
+        // Get the first sheet name
+        const sheetName = workbook.SheetNames[0];
+
+        // Get the data from the sheet as JSON
+        const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+        // If the file is empty or has no data, return an empty array
+        if (!sheetData || sheetData.length === 0) {
+            console.log('The Excel file is empty or invalid.');
+            return [];
+        }
+
+        // Display the data for debugging (optional)
+        console.log('Extracted Data:', sheetData);
+
+        return sheetData; // Returns an array of objects
+    }
+
+    // Example Usage
+    const filePath = `assets/NBS-files/NBSList-${languageCode}.xlsx`; 
+    const resultArray = createArrayFromExcel(filePath);
+
+    // Log the resulting array
+    console.log('Generated Array:', resultArray);
+
+
+
+// #endregion INITIALIZE NBS DATA
