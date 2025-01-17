@@ -157,100 +157,6 @@
 
         const hexagons = {};
 
-        // List of objects organized per category with their values and icons
-
-        const objects = {
-            'B01': { en: 'Bird Nests', el: 'Φωλιές Πουλιών', category: 'B', cost: 5, economy: 1, city: 1, nature: 4, society: 2, icon: 'images/icons/B01-i.png', picture: 'images/gallery/B01.jpg', surface: true},
-            'B02': { en: 'Tree Planting', el: 'Δεντροφύτευση', category: 'B', cost: 10, economy: 1, city: 5, nature: 5, society: 4, icon: 'images/icons/B02-i.png', picture: 'images/gallery/B02.jpg', surface: true},
-            'B03': { en: 'Polinators Hotels', el: 'Ξενοδοχεία επικονιαστών', category: 'B', cost: 100, economy: 1, city: 1, nature: 4, society: 2, icon: 'images/icons/B03-i.png', picture: 'images/gallery/B03.jpg', surface: false},
-            'B04': { en: 'Vegetable Gardens', el: 'Λαχανόκηπος', category: 'B', cost: 50, economy: 3, city: 1, nature: 3, society: 4, icon: 'images/icons/B04-i.png', picture: 'images/gallery/B04.jpg', surface: true},
-            'B05': { en: 'Stone walls', el: 'Ξερολιθιές', category: 'B', cost: 50, economy: 1, city: 4, nature: 4, society: 2, icon: 'images/icons/B05-i.png', picture: 'images/gallery/B05.jpg', surface: true},
-            'B06': { en: 'Arid Gardens', el: 'Ξεροί Κήποι', category: 'B', cost: 30, economy: 1, city: 4, nature: 4, society: 2, icon: 'images/icons/B06-i.png', picture: 'images/gallery/B06.jpg', surface: true},
-            'A01': { en: 'Outdoor Gym', el: 'Υπαίθριο Γυμναστήριο', category: 'A', cost: 10000, economy: 3, city: 5, nature: 3, society: 4, icon: 'images/icons/A01-i.png', picture: 'images/gallery/A01.jpg', surface: false},
-            'A02': { en: 'Natural Playground', el: 'Φυσικοί Παιδότοποι', category: 'A', cost: 200, economy: 3, city: 5, nature: 3, society: 4, icon: 'images/icons/A02-i.png', picture: 'images/gallery/A02.jpg', surface: true},
-            'A03': { en: 'Composting', el: 'Κομποστοποίηση', category: 'A', cost: 150, economy: 3, city: 1, nature: 3, society: 3, icon: 'images/icons/A03-i.png', picture: 'images/gallery/A03.jpg', surface: false},
-            'A04': { en: 'Dog Park', el: 'Πάρκο Σκύλων', category: 'A', cost: 500, economy: 1, city: 2, nature: 1, society: 4, icon: 'images/icons/A04-i.png', picture: 'images/gallery/A04.jpg', surface: true},
-            'A05': { en: 'Art', el: 'Τέχνη', category: 'A', cost: 5000, economy: 1, city: 4, nature: 1, society: 3, icon: 'images/icons/A05-i.png', picture: 'images/gallery/A05.jpg', surface: false},
-            'A06': { en: 'Telescope', el: 'Τηλεσκόπιο', category: 'A', cost: 3000, economy: 1, city: 2, nature: 1, society: 3, icon: 'images/icons/A06-i.png', picture: 'images/gallery/A06.jpg', surface: false},
-            'F01': { en: 'Eco-Furniture', el: 'Οικολογικά Έπιπλα', category: 'F', cost: 200, economy: 3, city: 4, nature: 4, society: 4, icon: 'images/icons/F01-i.png', picture: 'images/gallery/F01.jpg', surface: true},
-            'F02': { en: 'Resting Places', el: 'Χώρος Ξεκούρασης', category: 'F', cost: 400, economy: 3, city: 4, nature: 4, society: 4, icon: 'images/icons/F02-i.png', picture: 'images/gallery/F02.jpg', surface: true},
-            'F03': { en: 'Kiosk', el: 'Κιόσκι', category: 'F', cost: 6000, economy: 1, city: 3, nature: 1, society: 4, icon: 'images/icons/F03-i.png', picture: 'images/gallery/F03.jpg', surface: false},
-            'W01': { en: 'Riparian Buffer', el: 'Παραποτάμια Ζώνη', category: 'W', cost: 350, economy: 2, city: 2, nature: 4, society: 3, icon: 'images/icons/W01-i.png', picture: 'images/gallery/W01.jpg', surface: true},
-            'W02': { en: 'Permeable Surfaces', el: 'Διαπερατά Υλικά', category: 'W', cost: 100, economy: 1, city: 2, nature: 3, society: 2, icon: 'images/icons/W02-i.png', picture: 'images/gallery/W02.jpg', surface: true},
-            'W03': { en: 'Floodpark', el: 'Πάρκο Πλυμμήρας', category: 'W', cost: 450, economy: 4, city: 5, nature: 5, society: 2, icon: 'images/icons/W03-i.png', picture: 'images/gallery/W03.jpg', surface: true}
-        };
-
-        //List of categories that are visible in the UI
-        const categories = {
-            'B': {en: 'Biodiversity', el: 'Βιοποικιλότητα'},
-            'A': {en: 'Activities', el: 'Δραστηριότητες'},
-            'F': {en: 'Furniture', el: 'Επίπλωση'},
-            'W': {en: 'Water Management', el: 'Διαχείριση νερού'},
-        };
-
-        function createObjectMenu(objects) {
-            const menuContainer = document.getElementById('object-menu');        
-            
-            for (const category in categories) {
-                const categoryValue = categories[category][languageCode];
-        
-                // Create a container for the category heading and icon
-                const categoryHeading = document.createElement('h4');
-                categoryHeading.classList.add('category-heading');
-        
-                const img = document.createElement('img');
-                img.setAttribute('src', `images/categories/${category}.png`);
-                img.classList.add('category-icon');
-
-                // Append the icon and category text to the heading
-                categoryHeading.appendChild(img);
-                categoryHeading.appendChild(document.createTextNode(categoryValue));
-                
-                // Append the category heading to the menu container
-                menuContainer.appendChild(categoryHeading);
-        
-                // Iterate over the objects and create a checkbox for each
-                for (const objectKey in objects) {
-                    if (objects[objectKey].category === category) {
-                        const objectName = objects[objectKey][languageCode];
-        
-                        // Create a div to contain each checkbox and label for inline alignment
-                        const optionContainer = document.createElement('div');
-                        optionContainer.classList.add('checkbox-container');
-                        
-                        // Create the checkbox input
-                        const checkbox = document.createElement('input');
-                        checkbox.type = 'checkbox';
-                        checkbox.name = 'objects';
-                        checkbox.value = objectKey;
-                        checkbox.classList.add('object-checkbox');
-                        let displayText = '';
-                        
-                        // Create the display text for the checkbox option
-                        if (objects[objectKey].surface === true) {
-                            displayText = `${objectKey}: ${objectName} (€${objects[objectKey].cost} /m2)`;
-                        } else {
-                            if (objects[objectKey].cost > 999) {
-                                displayText = `${objectKey}: ${objectName} (€${(objects[objectKey].cost)/1000} k/p.)`;
-                            } else {
-                                displayText = `${objectKey}: ${objectName} (€${objects[objectKey].cost} /p.)`;
-                            }
-                        }
-                        
-                        // Append checkbox and text to the container, then add to menuContainer
-                        optionContainer.appendChild(checkbox);
-                        optionContainer.appendChild(document.createTextNode(displayText));
-                        menuContainer.appendChild(optionContainer);
-                    }
-                }
-        
-                // Add space between categories
-                menuContainer.appendChild(document.createElement('br'));
-            }
-        }
-            
-        createObjectMenu(objects);
-        
     // #endregion APP FUNCTIONS
 
     // #region POLYGON FUNCTIONS
@@ -542,8 +448,6 @@
     // #endregion POLYGON FORM
 
     // #region MAP DATA
-
-
 
         // 360 image data with coordinates and image URLs
         const imageLocations = [

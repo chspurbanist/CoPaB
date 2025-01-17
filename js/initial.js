@@ -331,37 +331,127 @@ const languageCode = currentLanguage.match(/-(\w{2})\./)[1];
 
 // #region INITIALIZE NBS DATA
 
-    // Function to fetch and process the Excel file
-    function fetchAndProcessExcel() {
-        const filePath = 'assets/NBS-files/NBSList-en.xlsx'; // Path to your Excel file
+   // #region READ XLSX Data
 
-        fetch(filePath)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+        const allObjects = {};
+
+        function fetchAndProcessExcel() {
+            const filePath = `assets/NBS-files/NBSList-${languageCode}.xlsx`; // Path to your Excel file
+
+            return fetch(filePath)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.arrayBuffer(); // Read file as ArrayBuffer
+                })
+                .then((data) => {
+                    // Parse the Excel data
+                    const workbook = XLSX.read(data, { type: 'array' });
+
+                    // Get the first sheet's name and data
+                    const sheetName = workbook.SheetNames[0];
+                    const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+                    allObjects[sheetName] = sheetData;
+
+                    // Log the parsed data for debugging
+                    console.log('Parsed Excel Data:', allObjects);
+
+                    return allObjects; // Return the parsed data
+                })
+                .catch((error) => {
+                    console.error('Error fetching or processing Excel file:', error);
+                });
+        }
+
+    // #endregion READ XLSX Data
+
+    // #region CREATE NBS CHECKLIST
+
+        // List of categories that are visible in the UI
+        const categories = {
+            Participatory: { en: 'Participatory', el: 'Συμμετοχικές' },
+            Technological: { en: 'Technological', el: 'Τεχνολογικές' },
+            Territorial: { en: 'Territorial', el: 'Χωρικές' },
+        };
+
+        function createObjectMenu(objects) {
+            const menuContainer = document.getElementById('object-menu');
+            console.log('Creating Objects Menu');
+
+            for (const category in categories) {
+                const categoryValue = categories[category][languageCode];
+
+                // Create a container for the category heading and icon
+                const categoryHeading = document.createElement('h4');
+                categoryHeading.classList.add('category-heading');
+
+                const img = document.createElement('img');
+                img.setAttribute('src', `images/categories/${category}.png`);
+                img.classList.add('category-icon');
+
+                // Append the icon and category text to the heading
+                categoryHeading.appendChild(img);
+                categoryHeading.appendChild(document.createTextNode(categoryValue));
+
+                // Append the category heading to the menu container
+                menuContainer.appendChild(categoryHeading);
+
+                // Iterate over the objects and create a checkbox for each
+                for (const objectKey in objects) {
+                    console.log(objects[objectKey][category]);
+                    if (objects[objectKey].category === category) {
+                        const objectName = objects[objectKey][languageCode];
+
+                        // Create a div to contain each checkbox and label for inline alignment
+                        const optionContainer = document.createElement('div');
+                        optionContainer.classList.add('checkbox-container');
+
+                        // Create the checkbox input
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.name = 'objects';
+                        checkbox.value = objectKey;
+                        checkbox.classList.add('object-checkbox');
+                        let displayText = '';
+
+                        // Create the display text for the checkbox option
+                        if (objects[objectKey].surface === true) {
+                            displayText = `${objectKey}: ${objectName} (€${objects[objectKey].cost} /m2)`;
+                        } else {
+                            if (objects[objectKey].cost > 999) {
+                                displayText = `${objectKey}: ${objectName} (€${(objects[objectKey].cost) / 1000} k/p.)`;
+                            } else {
+                                displayText = `${objectKey}: ${objectName} (€${objects[objectKey].cost} /p.)`;
+                            }
+                        }
+
+                        // Append checkbox and text to the container, then add to menuContainer
+                        optionContainer.appendChild(checkbox);
+                        optionContainer.appendChild(document.createTextNode(displayText));
+                        menuContainer.appendChild(optionContainer);
+                    }
                 }
-                return response.arrayBuffer(); // Read file as ArrayBuffer
-            })
-            .then((data) => {
-                // Parse the Excel data
-                const workbook = XLSX.read(data, { type: 'array' });
 
-                // Get the first sheet's name and data
-                const sheetName = workbook.SheetNames[0];
-                const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+                // Add space between categories
+                menuContainer.appendChild(document.createElement('br'));
+            }
+        }
 
-                // Log the array for debugging
-                console.log('Parsed Excel Data:', sheetData);
-
-                // Return the data array for further use
-                return sheetData;
-            })
-            .catch((error) => {
-                console.error('Error fetching or processing Excel file:', error);
+        // Fetch data and create the menu after the data is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAndProcessExcel().then(() => {
+                const objects = allObjects["NBS_List"];
+                if (objects) {
+                    createObjectMenu(objects);
+                } else {
+                    console.error('NBS_List data not found in the Excel file.');
+                }
             });
-    }
+        });
 
-    // Automatically fetch and process the file on page load
-    document.addEventListener('DOMContentLoaded', fetchAndProcessExcel);
+    // #endregion CREATE NBS CHECKLIST
+
+
 
 // #endregion INITIALIZE NBS DATA
