@@ -1,58 +1,8 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoiY3NwYW5vcyIsImEiOiJjbHgzMjBucjYwdjMxMm1zZDVvNjBqaGh2In0.ZYBMQvQHNg2pe34dtyPwEQ';
-const host = 'https://copab.onrender.com/';
+
 
 // #region START-UP FUNCTIONS
-    const currentURL = window.location.pathname;
-    const currentLanguage = currentURL.split("/").pop();
-    const languageCode = currentLanguage.match(/-(\w{2})\./)[1];
-
-    // Map Constants
-    const initialLatLng = [35.143732, 33.343011]; 
-    const initialZoom = 17; 
-    let initialBudget = 0;
-    let budget = 0;
-    let currentBudget = 0;
-
-    function setInitialBudget() {
-
-        const budgetInput = document.getElementById('initial-budget-input').value;
-        const submitBtn = document.getElementById('submitBtn');
-        
-        // Validate the budget input
-        if (isNaN(budgetInput) || budgetInput < 20000 || budgetInput > 100000) {
-            alert("Please enter a valid budget!");
-        } else {
-            initialBudget = Number(budgetInput);
-            document.getElementById('budget').innerText = `${initialBudget}`;
-
-            document.getElementById('initial-budget-input').disabled = true;
-            submitBtn.disabled = true;
-            submitBtn.style.cursor = "not-allowed";
-            submitBtn.style.backgroundColor = "#ccc";
-            submitBtn.style.color = "#666";
-            submitBtn.innerText = 'Submitted';      
-        }
-
-        budget = initialBudget;
-        currentBudget = budget;
-    }
 
 
-    const map = L.map('map', {
-        editable: true,
-        maxZoom: 25,
-        closePopupOnClick: false
-    }).setView(initialLatLng, initialZoom);
-
-    // Function to create a new Mapbox tile layer
-    function createTileLayer(style) {
-        return L.tileLayer(`https://api.mapbox.com/styles/v1/mapbox/${style}/tiles/{z}/{x}/{y}?access_token=${mapboxgl.accessToken}`, {
-            tileSize: 512,
-            zoomOffset: -1,
-            maxZoom: 25,
-            attribution: '© Mapbox'
-        });``
-    }
 
     // #region APP FUNCTIONS
         // Function to update pop-up in real-time
@@ -593,16 +543,7 @@ const host = 'https://copab.onrender.com/';
 
     // #region MAP DATA
 
-        // Add initial tile layer
-        let currentLayer = createTileLayer('streets-v11').addTo(map);
 
-        // Handle style change
-        document.getElementById('mapStyleSelector').addEventListener('change', function(e) {
-            const selectedStyle = e.target.value;
-            map.removeLayer(currentLayer); // Remove the current layer
-            currentLayer = createTileLayer(selectedStyle); // Create and add the new layer
-            currentLayer.addTo(map);
-        });
 
         // 360 image data with coordinates and image URLs
         const imageLocations = [
@@ -924,6 +865,31 @@ const host = 'https://copab.onrender.com/';
     // #region IMPORT CSV
 
         // Function to handle the import process
+        
+        function setInitialBudget() {
+
+            const budgetInput = document.getElementById('initial-budget-input').value;
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Validate the budget input
+            if (isNaN(budgetInput) || budgetInput < 20000 || budgetInput > 100000) {
+                alert("Please enter a valid budget!");
+            } else {
+                initialBudget = Number(budgetInput);
+                document.getElementById('budget').innerText = `${initialBudget}`;
+
+                document.getElementById('initial-budget-input').disabled = true;
+                submitBtn.disabled = true;
+                submitBtn.style.cursor = "not-allowed";
+                submitBtn.style.backgroundColor = "#ccc";
+                submitBtn.style.color = "#666";
+                submitBtn.innerText = 'Submitted';      
+            }
+
+            budget = initialBudget;
+            currentBudget = budget;
+        }
+        
         async function importScenario() {
             try {
                 const [fileHandle] = await window.showOpenFilePicker({
