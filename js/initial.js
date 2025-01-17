@@ -45,35 +45,35 @@ const languageCode = currentLanguage.match(/-(\w{2})\./)[1];
 
 // #region INITIALIZE NBS DATA
 
-    // Read NBS excel file
-    const XLSX = require('xlsx');
+    // // Read NBS excel file
+    // const XLSX = require('xlsx');
 
-    // Load the Excel file
-    function loadExcelToDataFrame(filePath) {
-        // Read the Excel file
-        const workbook = XLSX.readFile(filePath);
+    // // Load the Excel file
+    // function loadExcelToDataFrame(filePath) {
+    //     // Read the Excel file
+    //     const workbook = XLSX.readFile(filePath);
 
-        // Get the first sheet's name
-        const sheetName = workbook.SheetNames[0];
+    //     // Get the first sheet's name
+    //     const sheetName = workbook.SheetNames[0];
 
-        // Parse the data from the first sheet
-        const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    //     // Parse the data from the first sheet
+    //     const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-        // Option 1: Plain JavaScript Array (JSON)
-        console.log("Plain Array Data:", sheetData);
+    //     // Option 1: Plain JavaScript Array (JSON)
+    //     console.log("Plain Array Data:", sheetData);
 
-        // Option 2: Convert to DataFrame (using danfojs-node)
-        const df = new dfd.DataFrame(sheetData);
-        console.log("DataFrame:", df);
+    //     // Option 2: Convert to DataFrame (using danfojs-node)
+    //     const df = new dfd.DataFrame(sheetData);
+    //     console.log("DataFrame:", df);
 
-        // Return the plain array or DataFrame
-        return df; // or return sheetData if not using danfojs-node
-    }
+    //     // Return the plain array or DataFrame
+    //     return df; // or return sheetData if not using danfojs-node
+    // }
 
-    // Call the function with your Excel file
-    const filePath = `assets/MBS-files/NBS List-${languageCode}.xlsx`; // Update this path
-    const dataFrame = loadExcelToDataFrame(filePath);
-    console.log(dataFrame);
+    // // Call the function with your Excel file
+    // const filePath = `assets/MBS-files/NBS List-${languageCode}.xlsx`; // Update this path
+    // const dataFrame = loadExcelToDataFrame(filePath);
+    // console.log(dataFrame);
 
 
 // #endregion INITIALIZE NBS DATA
@@ -84,8 +84,8 @@ const languageCode = currentLanguage.match(/-(\w{2})\./)[1];
 
         // Get elements
         const openInfoPopup = document.getElementById('openPopup');
-        const closeInfoPopup = document.getElementById('closePopup');
-        const infoPopup = document.getElementById('info-popup');
+        const colseInfoPopup = document.getElementById('closePopup');
+        const infoPopup = document.getElementById('popup');
         const overlay = document.getElementById('overlay');
 
         // Open popup event
@@ -95,7 +95,7 @@ const languageCode = currentLanguage.match(/-(\w{2})\./)[1];
         });
 
         // Close popup event
-        closeInfoPopup.addEventListener('click', () => {
+        colseInfoPopup.addEventListener('click', () => {
             infoPopup.style.display = 'none';
             overlay.style.display = 'none';
         });
