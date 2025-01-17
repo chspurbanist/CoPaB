@@ -89,7 +89,7 @@ button {
     cursor: pointer;
 }
 
-.info-popup {
+#info-popup {
     display: block;
     position: fixed;
     overflow: scroll;
@@ -106,7 +106,7 @@ button {
 }
 
 /* OVERLAY */
-.overlay {
+#overlay {
     display: block;
     position: fixed;
     top: 0;
