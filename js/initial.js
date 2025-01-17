@@ -84,7 +84,7 @@ const languageCode = currentLanguage.match(/-(\w{2})\./)[1];
 
         // Get elements
         const openInfoPopup = document.getElementById('openPopup');
-        const colseInfoPopup = document.getElementById('closePopup');
+        const closeInfoPopup = document.getElementById('closePopup');
         const infoPopup = document.getElementById('popup');
         const overlay = document.getElementById('overlay');
 
@@ -95,7 +95,7 @@ const languageCode = currentLanguage.match(/-(\w{2})\./)[1];
         });
 
         // Close popup event
-        colseInfoPopup.addEventListener('click', () => {
+        closeInfoPopup.addEventListener('click', () => {
             infoPopup.style.display = 'none';
             overlay.style.display = 'none';
         });
